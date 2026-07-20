@@ -6,43 +6,145 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body class="min-h-screen">
-		<Header />
-		<main class="mx-auto max-w-6xl px-4 py-20">
-			<div class="mx-auto max-w-3xl">
-				<h1 class="text-[40px] sm:text-[56px] leading-[1.05] tracking-tight text-primary mb-5">
-					Hello, Astronaut.
-				</h1>
-				<p class="text-[20px] sm:text-[22px] leading-[1.55] text-secondary mb-12">
-					Welcome to the official Astro blog starter template. This template serves as a lightweight, minimally-styled starting point for anyone looking to build a personal website, blog, or portfolio with Astro.
-				</p>
+<html lang="en" class="bg-background">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
 
-				<div class="grid gap-4 sm:grid-cols-2">
-					<a href="https://docs.astro.build/" target="_blank" class="group rounded-[28px] border border-divider bg-white/70 p-6 shadow-sm backdrop-blur transition hover:shadow-md">
-						<div class="text-[17px] font-semibold text-primary mb-1">Read the docs</div>
-						<div class="text-[15px] text-secondary">Guides, API reference, and best practices.</div>
-					</a>
-					<a href="https://astro.build/integrations" target="_blank" class="group rounded-[28px] border border-divider bg-white/70 p-6 shadow-sm backdrop-blur transition hover:shadow-md">
-						<div class="text-[17px] font-semibold text-primary mb-1">Integrations</div>
-						<div class="text-[15px] text-secondary">Add frameworks like React, Vue, and Tailwind.</div>
-					</a>
-				</div>
+    <main class="mx-auto max-w-6xl px-4 py-20 flex-1 relative z-[1]">
+      <div class="mx-auto max-w-3xl">
 
-				<div class="mt-16 text-[15px] text-secondary">
-					<p class="mb-2">Next steps:</p>
-					<ul class="list-disc pl-5 space-y-1 marker:text-secondary/70">
-						<li>Edit this page in <code class="rounded bg-divider px-1.5 py-0.5 text-[13px]">src/pages/index.astro</code></li>
-						<li>Update navigation in <code class="rounded bg-divider px-1.5 py-0.5 text-[13px]">src/components/Header.astro</code></li>
-						<li>Modify posts in <code class="rounded bg-divider px-1.5 py-0.5 text-[13px]">src/content/blog/</code></li>
-						<li>Tweak the post layout in <code class="rounded bg-divider px-1.5 py-0.5 text-[13px]">src/layouts/BlogPost.astro</code></li>
-					</ul>
-				</div>
-			</div>
-		</main>
-		<Footer />
-	</body>
+        <!-- Hero -->
+        <div class="mb-16">
+          <!-- Status pill -->
+          <div class="inline-flex items-center gap-2 border border-divider rounded-full px-3 py-1 mb-8 font-mono text-[12px] text-secondary">
+            <span aria-hidden="true" class="block w-1.5 h-1.5 rounded-full bg-accent" style="animation: pulse-dot 2.4s ease-in-out infinite; box-shadow: 0 0 6px oklch(0.82 0.14 195 / 0.8);"></span>
+            SYSTEM ONLINE
+          </div>
+
+          <h1 class="text-[42px] sm:text-[60px] leading-[1.04] tracking-tight text-primary font-sans mb-6 text-balance">
+            Hello,&nbsp;<span class="text-accent glow-accent">Astronaut.</span>
+          </h1>
+          <p class="text-[19px] sm:text-[21px] leading-[1.6] text-secondary mb-10 text-pretty max-w-[52ch]">
+            {SITE_DESCRIPTION} — a futuristic, minimal starting point built on Astro and Tailwind CSS.
+          </p>
+
+          <!-- CTA buttons -->
+          <div class="flex flex-wrap gap-3">
+            <a
+              href="/blog"
+              class="inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-[14px] font-semibold font-mono transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              style="background: var(--color-accent); color: oklch(0.10 0.012 260); box-shadow: 0 0 20px oklch(0.82 0.14 195 / 0.3);"
+              onmouseover="this.style.boxShadow='0 0 32px oklch(0.82 0.14 195 / 0.5)'"
+              onmouseout="this.style.boxShadow='0 0 20px oklch(0.82 0.14 195 / 0.3)'"
+            >
+              Read the blog
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a
+              href="/about"
+              class="inline-flex items-center gap-2 rounded-md border border-divider px-5 py-2.5 text-[14px] font-medium font-mono text-secondary hover:text-primary hover:border-accent transition-all duration-200"
+            >
+              About me
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick-links grid -->
+        <div class="grid gap-3 sm:grid-cols-2 mb-16">
+          <a
+            href="https://docs.astro.build/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card-glow group rounded-[16px] border border-divider p-5 transition-all duration-250"
+            style="background: var(--color-surface);"
+          >
+            <div class="flex items-start justify-between mb-2">
+              <span class="text-[13px] font-mono font-medium text-accent tracking-widest uppercase">Docs</span>
+              <svg aria-hidden="true" class="text-muted group-hover:text-accent transition-colors" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 12L12 2M12 2H5M12 2v7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="text-[16px] font-semibold text-primary mb-1">Read the docs</div>
+            <div class="text-[14px] text-secondary">Guides, API reference, and best practices.</div>
+          </a>
+
+          <a
+            href="https://astro.build/integrations"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card-glow group rounded-[16px] border border-divider p-5 transition-all duration-250"
+            style="background: var(--color-surface);"
+          >
+            <div class="flex items-start justify-between mb-2">
+              <span class="text-[13px] font-mono font-medium text-accent-warm tracking-widest uppercase">Integrations</span>
+              <svg aria-hidden="true" class="text-muted group-hover:text-accent-warm transition-colors" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 12L12 2M12 2H5M12 2v7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="text-[16px] font-semibold text-primary mb-1">Integrations</div>
+            <div class="text-[14px] text-secondary">Add frameworks like React, Vue, and Tailwind.</div>
+          </a>
+        </div>
+
+        <!-- Next steps / terminal block -->
+        <div class="rounded-[16px] border border-divider overflow-hidden" style="background: var(--color-code-bg);">
+          <!-- Terminal title bar -->
+          <div class="flex items-center gap-1.5 px-4 py-3 border-b border-divider">
+            <span aria-hidden="true" class="block w-2.5 h-2.5 rounded-full" style="background: oklch(0.65 0.18 25);"></span>
+            <span aria-hidden="true" class="block w-2.5 h-2.5 rounded-full" style="background: oklch(0.78 0.17 80);"></span>
+            <span aria-hidden="true" class="block w-2.5 h-2.5 rounded-full" style="background: oklch(0.72 0.18 150);"></span>
+            <span class="ml-auto text-[11px] font-mono text-muted">next-steps.sh</span>
+          </div>
+
+          <!-- Terminal body -->
+          <div class="px-5 py-4 space-y-2.5 font-mono text-[14px]" role="list" aria-label="Next steps">
+            <p class="text-muted text-[12px] mb-3"># Next steps</p>
+            <div role="listitem" class="flex items-start gap-2">
+              <span aria-hidden="true" class="text-accent select-none mt-px">$</span>
+              <span class="text-secondary">
+                Edit <code class="text-primary rounded px-1 py-0.5 text-[13px]" style="background: var(--color-divider);">src/pages/index.astro</code>
+              </span>
+            </div>
+            <div role="listitem" class="flex items-start gap-2">
+              <span aria-hidden="true" class="text-accent select-none mt-px">$</span>
+              <span class="text-secondary">
+                Update nav in <code class="text-primary rounded px-1 py-0.5 text-[13px]" style="background: var(--color-divider);">src/components/Header.astro</code>
+              </span>
+            </div>
+            <div role="listitem" class="flex items-start gap-2">
+              <span aria-hidden="true" class="text-accent select-none mt-px">$</span>
+              <span class="text-secondary">
+                Write posts in <code class="text-primary rounded px-1 py-0.5 text-[13px]" style="background: var(--color-divider);">src/content/blog/</code>
+              </span>
+            </div>
+            <div role="listitem" class="flex items-start gap-2">
+              <span aria-hidden="true" class="text-accent select-none mt-px">$</span>
+              <span class="text-secondary">
+                Tweak layout in <code class="text-primary rounded px-1 py-0.5 text-[13px]" style="background: var(--color-divider);">src/layouts/BlogPost.astro</code>
+              </span>
+            </div>
+            <div class="flex items-center gap-2 mt-2">
+              <span aria-hidden="true" class="text-accent-warm select-none">▶</span>
+              <span class="text-accent-warm text-[13px]">Ready.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <Footer />
+  </body>
 </html>
+
+<style>
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+</style>

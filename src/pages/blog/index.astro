@@ -8,40 +8,77 @@ import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={`${SITE_TITLE} — Blog`} description={SITE_DESCRIPTION} />
-	</head>
-	<body class="min-h-screen">
-		<Header />
-		<main class="mx-auto max-w-6xl px-4 py-16">
-			<div class="mx-auto max-w-3xl">
-				<h1 class="text-[34px] sm:text-[44px] leading-[1.08] tracking-tight text-primary mb-3">Blog</h1>
-				<p class="text-[17px] text-secondary mb-10">Thoughts, updates, and notes.</p>
-				<div class="grid gap-6 sm:grid-cols-2">
-					{posts.map((post, i) => (
-						<a href={`/blog/${post.id}/`} class="group flex flex-col gap-3 rounded-[28px] border border-divider bg-white/70 p-3 shadow-sm backdrop-blur transition hover:shadow-md">
-							<div class="overflow-hidden rounded-[22px] bg-white">
-								{post.data.heroImage && (
-									<Image class="w-full transition duration-500 group-hover:scale-[1.02]" width={1280} height={720} src={post.data.heroImage} alt={post.data.title} />
-								)}
-							</div>
-							<div class="px-2 pb-2">
-								<h2 class="text-[19px] font-semibold text-primary tracking-tight mb-1">{post.data.title}</h2>
-								<p class="text-[13px] font-medium text-secondary">
-									<FormattedDate date={post.data.pubDate} />
-								</p>
-							</div>
-						</a>
-					))}
-				</div>
-			</div>
-		</main>
-		<Footer />
-	</body>
+<html lang="en" class="bg-background">
+  <head>
+    <BaseHead title={`${SITE_TITLE} — Blog`} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="mx-auto max-w-6xl px-4 py-16 flex-1 relative z-[1]">
+      <div class="mx-auto max-w-3xl">
+
+        <!-- Page header -->
+        <div class="mb-12">
+          <p class="text-[12px] font-mono text-accent tracking-widest uppercase mb-3">Archive</p>
+          <h1 class="text-[36px] sm:text-[48px] leading-[1.06] tracking-tight text-primary font-sans mb-3 text-balance">
+            Blog
+          </h1>
+          <p class="text-[17px] text-secondary text-pretty">Thoughts, updates, and notes from the terminal.</p>
+        </div>
+
+        <!-- Post grid -->
+        <div class="grid gap-5 sm:grid-cols-2" role="list" aria-label="Blog posts">
+          {posts.map((post) => (
+            <article role="listitem">
+              <a
+                href={`/blog/${post.id}/`}
+                class="card-glow group flex flex-col gap-0 rounded-[16px] border border-divider overflow-hidden transition-all duration-250 h-full"
+                style="background: var(--color-surface);"
+                aria-label={`Read: ${post.data.title}`}
+              >
+                {post.data.heroImage && (
+                  <div class="overflow-hidden aspect-[16/9]" style="background: var(--color-code-bg);">
+                    <Image
+                      class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                      width={1280}
+                      height={720}
+                      src={post.data.heroImage}
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+                <div class="flex flex-col gap-2 p-5">
+                  <p class="text-[12px] font-mono text-muted">
+                    <FormattedDate date={post.data.pubDate} />
+                  </p>
+                  <h2 class="text-[17px] font-semibold text-primary tracking-tight leading-snug group-hover:text-accent transition-colors duration-200">
+                    {post.data.title}
+                  </h2>
+                  {post.data.description && (
+                    <p class="text-[14px] text-secondary leading-relaxed line-clamp-2">
+                      {post.data.description}
+                    </p>
+                  )}
+                  <div class="flex items-center gap-1 mt-auto pt-2 text-[13px] font-mono text-accent">
+                    <span>Read more</span>
+                    <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" class="transition-transform duration-200 group-hover:translate-x-0.5">
+                      <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+
+      </div>
+    </main>
+    <Footer />
+  </body>
 </html>

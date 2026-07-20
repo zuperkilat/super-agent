@@ -11,45 +11,79 @@ type Props = CollectionEntry<'blog'>['data'];
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-	</head>
+<html lang="en" class="bg-background">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
 
-	<body class="min-h-screen">
-		<Header />
-		<main class="mx-auto max-w-6xl px-4">
-			<article class="py-12 sm:py-16 md:py-20">
-				<div class="mx-auto max-w-3xl">
-					<div class="flex flex-col gap-3 mb-6">
-						<div class="inline-flex self-start items-center rounded-full bg-divider px-3 py-1 text-[13px] font-medium text-secondary">
-							<FormattedDate date={pubDate} />
-						</div>
-						{updatedDate && (
-							<p class="text-[15px] text-secondary -mt-1">Last updated on <FormattedDate date={updatedDate} /></p>
-						)}
-					</div>
-					<h1 class="text-[40px] sm:text-[48px] leading-[1.08] tracking-tight text-primary mb-6">{title}</h1>
-					<p class="text-[20px] leading-[1.5] text-secondary">{description}</p>
-				</div>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="mx-auto max-w-6xl px-4 flex-1 relative z-[1]">
+      <article class="py-12 sm:py-16 md:py-20">
+        <div class="mx-auto max-w-3xl">
 
-				{heroImage && (
-					<div class="mt-10">
-						<Image
-							class="w-full rounded-[28px] shadow-sm"
-							width={1280}
-							height={720}
-							alt={title}
-							src={heroImage}
-						/>
-					</div>
-				)}
+          <!-- Meta -->
+          <div class="flex flex-wrap items-center gap-3 mb-8">
+            <span
+              class="inline-flex items-center rounded-full px-3 py-1 text-[12px] font-mono font-medium"
+              style="background: var(--color-surface); border: 1px solid var(--color-divider); color: var(--color-accent);"
+            >
+              <FormattedDate date={pubDate} />
+            </span>
+            {updatedDate && (
+              <span class="text-[13px] font-mono text-muted">
+                Updated: <FormattedDate date={updatedDate} />
+              </span>
+            )}
+          </div>
 
-				<div class="prose prose-lg mt-12 text-primary/90 [--tw-prose-body:text:var(--color-primary)] [--tw-prose-headings:text:var(--color-primary)] [--tw-prose-links:text:var(--color-accent)]">
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+          <!-- Title -->
+          <h1 class="text-[36px] sm:text-[52px] leading-[1.07] tracking-tight text-primary font-sans mb-5 text-balance">
+            {title}
+          </h1>
+
+          <!-- Description -->
+          {description && (
+            <p class="text-[19px] leading-[1.65] text-secondary mb-8 text-pretty">{description}</p>
+          )}
+
+          <!-- Divider -->
+          <div class="h-px mb-10" style="background: linear-gradient(90deg, var(--color-accent), var(--color-divider));"></div>
+        </div>
+
+        <!-- Hero image -->
+        {heroImage && (
+          <div class="mt-2 mb-12">
+            <Image
+              class="w-full rounded-[16px]"
+              style="border: 1px solid var(--color-divider);"
+              width={1280}
+              height={720}
+              alt={title}
+              src={heroImage}
+            />
+          </div>
+        )}
+
+        <!-- Content -->
+        <div class="prose prose-lg mx-auto max-w-3xl">
+          <slot />
+        </div>
+
+        <!-- Back link -->
+        <div class="mx-auto max-w-3xl mt-16 pt-8 border-t border-divider">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-2 text-[14px] font-mono text-secondary hover:text-accent transition-colors duration-200"
+          >
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M12 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to blog
+          </a>
+        </div>
+      </article>
+    </main>
+    <Footer />
+  </body>
 </html>
