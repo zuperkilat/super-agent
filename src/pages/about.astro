@@ -1,0 +1,26 @@
+---
+import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
+import Layout from '../layouts/BlogPost.astro';
+---
+
+<Layout
+	title="About Me"
+	description="A short note about me."
+	pubDate={new Date('August 08 2021')}
+	heroImage={AboutHeroImage}
+>
+	<p>
+		I build thoughtful web experiences, mostly with Astro and Tailwind.
+		This space is where I publish notes on design, engineering, and craft.
+	</p>
+
+	<p>
+		Right now I care about readable typography, calm interfaces, and fast sites.
+		I believe the best digital products feel quiet, clear, and calmly responsive.
+	</p>
+
+	<p>
+		If you want to say hi, reach out on GitHub or email. I’m more likely to reply
+		to short, specific questions than long greetings.
+	</p>
+</Layout>

@@ -1,0 +1,48 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body class="min-h-screen">
+		<Header />
+		<main class="mx-auto max-w-6xl px-4 py-20">
+			<div class="mx-auto max-w-3xl">
+				<h1 class="text-[40px] sm:text-[56px] leading-[1.05] tracking-tight text-primary mb-5">
+					Hello, Astronaut.
+				</h1>
+				<p class="text-[20px] sm:text-[22px] leading-[1.55] text-secondary mb-12">
+					Welcome to the official Astro blog starter template. This template serves as a lightweight, minimally-styled starting point for anyone looking to build a personal website, blog, or portfolio with Astro.
+				</p>
+
+				<div class="grid gap-4 sm:grid-cols-2">
+					<a href="https://docs.astro.build/" target="_blank" class="group rounded-[28px] border border-divider bg-white/70 p-6 shadow-sm backdrop-blur transition hover:shadow-md">
+						<div class="text-[17px] font-semibold text-primary mb-1">Read the docs</div>
+						<div class="text-[15px] text-secondary">Guides, API reference, and best practices.</div>
+					</a>
+					<a href="https://astro.build/integrations" target="_blank" class="group rounded-[28px] border border-divider bg-white/70 p-6 shadow-sm backdrop-blur transition hover:shadow-md">
+						<div class="text-[17px] font-semibold text-primary mb-1">Integrations</div>
+						<div class="text-[15px] text-secondary">Add frameworks like React, Vue, and Tailwind.</div>
+					</a>
+				</div>
+
+				<div class="mt-16 text-[15px] text-secondary">
+					<p class="mb-2">Next steps:</p>
+					<ul class="list-disc pl-5 space-y-1 marker:text-secondary/70">
+						<li>Edit this page in <code class="rounded bg-divider px-1.5 py-0.5 text-[13px]">src/pages/index.astro</code></li>
+						<li>Update navigation in <code class="rounded bg-divider px-1.5 py-0.5 text-[13px]">src/components/Header.astro</code></li>
+						<li>Modify posts in <code class="rounded bg-divider px-1.5 py-0.5 text-[13px]">src/content/blog/</code></li>
+						<li>Tweak the post layout in <code class="rounded bg-divider px-1.5 py-0.5 text-[13px]">src/layouts/BlogPost.astro</code></li>
+					</ul>
+				</div>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

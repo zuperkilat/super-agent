@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${SITE_TITLE} — Blog`} description={SITE_DESCRIPTION} />
+	</head>
+	<body class="min-h-screen">
+		<Header />
+		<main class="mx-auto max-w-6xl px-4 py-16">
+			<div class="mx-auto max-w-3xl">
+				<h1 class="text-[34px] sm:text-[44px] leading-[1.08] tracking-tight text-primary mb-3">Blog</h1>
+				<p class="text-[17px] text-secondary mb-10">Thoughts, updates, and notes.</p>
+				<div class="grid gap-6 sm:grid-cols-2">
+					{posts.map((post, i) => (
+						<a href={`/blog/${post.id}/`} class="group flex flex-col gap-3 rounded-[28px] border border-divider bg-white/70 p-3 shadow-sm backdrop-blur transition hover:shadow-md">
+							<div class="overflow-hidden rounded-[22px] bg-white">
+								{post.data.heroImage && (
+									<Image class="w-full transition duration-500 group-hover:scale-[1.02]" width={1280} height={720} src={post.data.heroImage} alt={post.data.title} />
+								)}
+							</div>
+							<div class="px-2 pb-2">
+								<h2 class="text-[19px] font-semibold text-primary tracking-tight mb-1">{post.data.title}</h2>
+								<p class="text-[13px] font-medium text-secondary">
+									<FormattedDate date={post.data.pubDate} />
+								</p>
+							</div>
+						</a>
+					))}
+				</div>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
