@@ -2,7 +2,49 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+// Get all blog posts
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// Featured post (most recent)
+const featuredPost = posts[0];
+const recentPosts = posts.slice(1, 4);
+
+// Blog categories with descriptions
+const categories = [
+  {
+    id: 'agentic-ai',
+    title: 'Agentic AI',
+    description: 'Building autonomous agents and multi-step reasoning systems',
+    icon: '⚙️',
+    gradient: 'from-cyan-400 to-blue-500'
+  },
+  {
+    id: 'ai-engineering',
+    title: 'AI Engineering',
+    description: 'Production AI systems, fine-tuning, and deployment strategies',
+    icon: '🔬',
+    gradient: 'from-purple-400 to-pink-500'
+  },
+  {
+    id: 'business-automation',
+    title: 'Business Automation',
+    description: 'Workflow optimization and process automation with AI',
+    icon: '⚡',
+    gradient: 'from-amber-400 to-orange-500'
+  },
+  {
+    id: 'seo-geo',
+    title: 'SEO & GEO',
+    description: 'Search optimization and geolocation-based strategies',
+    icon: '📍',
+    gradient: 'from-green-400 to-teal-500'
+  },
+];
 ---
 
 <!doctype html>
@@ -13,129 +55,219 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
   <body class="min-h-screen flex flex-col">
     <Header />
 
-    <main class="mx-auto max-w-6xl px-4 py-20 flex-1 relative z-[1]">
-      <div class="mx-auto max-w-3xl">
+    <main class="mx-auto max-w-7xl px-4 py-16 flex-1 relative z-[1] w-full">
+      
+      <!-- Hero Section -->
+      <section class="mb-24">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <!-- Left: Hero Text -->
+          <div class="max-w-2xl">
+            <div class="inline-flex items-center gap-2 border border-divider rounded-full px-3 py-1 mb-8 font-mono text-[12px] text-secondary">
+              <span aria-hidden="true" class="block w-1.5 h-1.5 rounded-full bg-accent" style="animation: pulse-dot 2.4s ease-in-out infinite; box-shadow: 0 0 6px oklch(0.82 0.14 195 / 0.8);"></span>
+              EXPERTISE VERIFIED
+            </div>
 
-        <!-- Hero -->
-        <div class="mb-16">
-          <!-- Status pill -->
-          <div class="inline-flex items-center gap-2 border border-divider rounded-full px-3 py-1 mb-8 font-mono text-[12px] text-secondary">
-            <span aria-hidden="true" class="block w-1.5 h-1.5 rounded-full bg-accent" style="animation: pulse-dot 2.4s ease-in-out infinite; box-shadow: 0 0 6px oklch(0.82 0.14 195 / 0.8);"></span>
-            SYSTEM ONLINE
+            <h1 class="text-[42px] sm:text-[56px] lg:text-[64px] leading-[1.08] tracking-tight text-primary font-sans mb-6 text-balance">
+              Advanced&nbsp;<span class="text-accent glow-accent">AI Systems</span>&nbsp;for Modern Builders
+            </h1>
+            
+            <p class="text-[17px] sm:text-[18px] leading-[1.7] text-secondary mb-8 text-pretty max-w-[55ch]">
+              Deep technical explorations into agentic AI, production engineering, business automation, and modern SEO/GEO strategies. Built for engineers and strategists.
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+              <a
+                href="#featured"
+                class="inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-[14px] font-semibold font-mono transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                style="background: var(--color-accent); color: oklch(0.10 0.012 260); box-shadow: 0 0 20px oklch(0.82 0.14 195 / 0.3);"
+                onmouseover="this.style.boxShadow='0 0 32px oklch(0.82 0.14 195 / 0.5)'"
+                onmouseout="this.style.boxShadow='0 0 20px oklch(0.82 0.14 195 / 0.3)'"
+              >
+                Explore articles
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <a
+                href="/blog"
+                class="inline-flex items-center gap-2 rounded-md border border-divider px-5 py-2.5 text-[14px] font-medium font-mono text-secondary hover:text-primary hover:border-accent transition-all duration-200"
+              >
+                View archive
+              </a>
+            </div>
           </div>
 
-          <h1 class="text-[42px] sm:text-[60px] leading-[1.04] tracking-tight text-primary font-sans mb-6 text-balance">
-            Hello,&nbsp;<span class="text-accent glow-accent">Astronaut.</span>
-          </h1>
-          <p class="text-[19px] sm:text-[21px] leading-[1.6] text-secondary mb-10 text-pretty max-w-[52ch]">
-            {SITE_DESCRIPTION} — a futuristic, minimal starting point built on Astro and Tailwind CSS.
-          </p>
+          <!-- Right: Featured/Visual -->
+          <div class="relative hidden lg:block">
+            <div class="absolute inset-0 rounded-[24px] blur-2xl opacity-30" style="background: linear-gradient(135deg, oklch(0.82 0.14 195), oklch(0.84 0.15 85));"></div>
+            <div class="relative rounded-[24px] border border-divider p-8 overflow-hidden" style="background: var(--color-surface); backdrop-filter: blur(20px);">
+              <div class="space-y-4">
+                <div class="h-3 w-16 rounded bg-accent opacity-60"></div>
+                <div class="h-3 w-full rounded bg-muted opacity-40"></div>
+                <div class="h-3 w-full rounded bg-muted opacity-40"></div>
+                <div class="h-3 w-24 rounded bg-muted opacity-40"></div>
+                <div class="mt-6 pt-6 border-t border-divider">
+                  <div class="h-3 w-20 rounded bg-accent-warm opacity-60"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <!-- CTA buttons -->
-          <div class="flex flex-wrap gap-3">
+      <!-- Category Highlights -->
+      <section class="mb-24">
+        <div class="mb-12">
+          <p class="text-[12px] font-mono text-accent tracking-widest uppercase mb-3">Topics</p>
+          <h2 class="text-[32px] sm:text-[40px] leading-[1.1] tracking-tight text-primary font-sans text-balance">
+            Four pillars of expertise
+          </h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {categories.map((cat) => (
+            <a
+              href={`#${cat.id}`}
+              class="card-glow group rounded-[16px] border border-divider p-6 transition-all duration-250 flex flex-col"
+              style="background: var(--color-surface);"
+            >
+              <div class="text-4xl mb-4 opacity-80 group-hover:opacity-100 transition-opacity">{cat.icon}</div>
+              <h3 class="text-[18px] font-semibold text-primary mb-2 leading-snug group-hover:text-accent transition-colors">
+                {cat.title}
+              </h3>
+              <p class="text-[14px] text-secondary leading-relaxed flex-1">
+                {cat.description}
+              </p>
+              <div class="flex items-center gap-1 mt-4 text-[13px] font-mono text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <span>Learn</span>
+                <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" class="transition-transform group-hover:translate-x-0.5">
+                  <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <!-- Featured Post Section -->
+      {featuredPost && (
+        <section class="mb-24" id="featured">
+          <div class="mb-8">
+            <p class="text-[12px] font-mono text-accent-warm tracking-widest uppercase mb-3">Featured</p>
+            <h2 class="text-[32px] sm:text-[40px] leading-[1.1] tracking-tight text-primary font-sans text-balance">
+              Latest Article
+            </h2>
+          </div>
+
+          <a
+            href={`/blog/${featuredPost.id}/`}
+            class="card-glow group rounded-[20px] border border-divider overflow-hidden transition-all duration-250 block"
+            style="background: var(--color-surface);"
+          >
+            <div class="grid lg:grid-cols-2 gap-0">
+              {featuredPost.data.heroImage && (
+                <div class="overflow-hidden lg:order-2 aspect-[16/9] lg:aspect-auto lg:min-h-[340px]" style="background: var(--color-code-bg);">
+                  <img
+                    class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.05]"
+                    src={featuredPost.data.heroImage.src}
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </div>
+              )}
+              <div class="flex flex-col justify-between p-8 lg:p-10">
+                <div>
+                  <p class="text-[12px] font-mono text-muted mb-3">
+                    {featuredPost.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </p>
+                  <h3 class="text-[28px] sm:text-[32px] font-semibold text-primary mb-4 leading-snug group-hover:text-accent transition-colors duration-200">
+                    {featuredPost.data.title}
+                  </h3>
+                  {featuredPost.data.description && (
+                    <p class="text-[15px] text-secondary leading-relaxed mb-6">
+                      {featuredPost.data.description}
+                    </p>
+                  )}
+                </div>
+                <div class="flex items-center gap-2 text-[13px] font-mono text-accent">
+                  <span>Read article</span>
+                  <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" class="transition-transform group-hover:translate-x-1">
+                    <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </a>
+        </section>
+      )}
+
+      <!-- Recent Posts Grid -->
+      {recentPosts.length > 0 && (
+        <section class="mb-24">
+          <div class="mb-8">
+            <p class="text-[12px] font-mono text-accent tracking-widest uppercase mb-3">Recent</p>
+            <h2 class="text-[32px] sm:text-[40px] leading-[1.1] tracking-tight text-primary font-sans text-balance">
+              More articles
+            </h2>
+          </div>
+
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label="Recent blog posts">
+            {recentPosts.map((post) => (
+              <article role="listitem">
+                <a
+                  href={`/blog/${post.id}/`}
+                  class="card-glow group flex flex-col gap-0 rounded-[16px] border border-divider overflow-hidden transition-all duration-250 h-full"
+                  style="background: var(--color-surface);"
+                  aria-label={`Read: ${post.data.title}`}
+                >
+                  {post.data.heroImage && (
+                    <div class="overflow-hidden aspect-[16/9]" style="background: var(--color-code-bg);">
+                      <img
+                        class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                        src={post.data.heroImage.src}
+                        alt=""
+                        aria-hidden="true"
+                      />
+                    </div>
+                  )}
+                  <div class="flex flex-col gap-3 p-5 flex-1">
+                    <p class="text-[12px] font-mono text-muted">
+                      {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                    </p>
+                    <h3 class="text-[16px] font-semibold text-primary tracking-tight leading-snug group-hover:text-accent transition-colors duration-200">
+                      {post.data.title}
+                    </h3>
+                    {post.data.description && (
+                      <p class="text-[14px] text-secondary leading-relaxed line-clamp-2 flex-1">
+                        {post.data.description}
+                      </p>
+                    )}
+                    <div class="flex items-center gap-1 pt-2 text-[13px] font-mono text-accent">
+                      <span>Read more</span>
+                      <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" class="transition-transform duration-200 group-hover:translate-x-0.5">
+                        <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+
+          <div class="text-center mt-12">
             <a
               href="/blog"
-              class="inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-[14px] font-semibold font-mono transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-              style="background: var(--color-accent); color: oklch(0.10 0.012 260); box-shadow: 0 0 20px oklch(0.82 0.14 195 / 0.3);"
-              onmouseover="this.style.boxShadow='0 0 32px oklch(0.82 0.14 195 / 0.5)'"
-              onmouseout="this.style.boxShadow='0 0 20px oklch(0.82 0.14 195 / 0.3)'"
+              class="inline-flex items-center gap-2 rounded-md border border-divider px-5 py-2.5 text-[14px] font-medium font-mono text-secondary hover:text-primary hover:border-accent transition-all duration-200"
             >
-              Read the blog
+              View all articles
               <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
-            <a
-              href="/about"
-              class="inline-flex items-center gap-2 rounded-md border border-divider px-5 py-2.5 text-[14px] font-medium font-mono text-secondary hover:text-primary hover:border-accent transition-all duration-200"
-            >
-              About me
-            </a>
           </div>
-        </div>
+        </section>
+      )}
 
-        <!-- Quick-links grid -->
-        <div class="grid gap-3 sm:grid-cols-2 mb-16">
-          <a
-            href="https://docs.astro.build/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="card-glow group rounded-[16px] border border-divider p-5 transition-all duration-250"
-            style="background: var(--color-surface);"
-          >
-            <div class="flex items-start justify-between mb-2">
-              <span class="text-[13px] font-mono font-medium text-accent tracking-widest uppercase">Docs</span>
-              <svg aria-hidden="true" class="text-muted group-hover:text-accent transition-colors" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 12L12 2M12 2H5M12 2v7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="text-[16px] font-semibold text-primary mb-1">Read the docs</div>
-            <div class="text-[14px] text-secondary">Guides, API reference, and best practices.</div>
-          </a>
-
-          <a
-            href="https://astro.build/integrations"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="card-glow group rounded-[16px] border border-divider p-5 transition-all duration-250"
-            style="background: var(--color-surface);"
-          >
-            <div class="flex items-start justify-between mb-2">
-              <span class="text-[13px] font-mono font-medium text-accent-warm tracking-widest uppercase">Integrations</span>
-              <svg aria-hidden="true" class="text-muted group-hover:text-accent-warm transition-colors" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 12L12 2M12 2H5M12 2v7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="text-[16px] font-semibold text-primary mb-1">Integrations</div>
-            <div class="text-[14px] text-secondary">Add frameworks like React, Vue, and Tailwind.</div>
-          </a>
-        </div>
-
-        <!-- Next steps / terminal block -->
-        <div class="rounded-[16px] border border-divider overflow-hidden" style="background: var(--color-code-bg);">
-          <!-- Terminal title bar -->
-          <div class="flex items-center gap-1.5 px-4 py-3 border-b border-divider">
-            <span aria-hidden="true" class="block w-2.5 h-2.5 rounded-full" style="background: oklch(0.65 0.18 25);"></span>
-            <span aria-hidden="true" class="block w-2.5 h-2.5 rounded-full" style="background: oklch(0.78 0.17 80);"></span>
-            <span aria-hidden="true" class="block w-2.5 h-2.5 rounded-full" style="background: oklch(0.72 0.18 150);"></span>
-            <span class="ml-auto text-[11px] font-mono text-muted">next-steps.sh</span>
-          </div>
-
-          <!-- Terminal body -->
-          <div class="px-5 py-4 space-y-2.5 font-mono text-[14px]" role="list" aria-label="Next steps">
-            <p class="text-muted text-[12px] mb-3"># Next steps</p>
-            <div role="listitem" class="flex items-start gap-2">
-              <span aria-hidden="true" class="text-accent select-none mt-px">$</span>
-              <span class="text-secondary">
-                Edit <code class="text-primary rounded px-1 py-0.5 text-[13px]" style="background: var(--color-divider);">src/pages/index.astro</code>
-              </span>
-            </div>
-            <div role="listitem" class="flex items-start gap-2">
-              <span aria-hidden="true" class="text-accent select-none mt-px">$</span>
-              <span class="text-secondary">
-                Update nav in <code class="text-primary rounded px-1 py-0.5 text-[13px]" style="background: var(--color-divider);">src/components/Header.astro</code>
-              </span>
-            </div>
-            <div role="listitem" class="flex items-start gap-2">
-              <span aria-hidden="true" class="text-accent select-none mt-px">$</span>
-              <span class="text-secondary">
-                Write posts in <code class="text-primary rounded px-1 py-0.5 text-[13px]" style="background: var(--color-divider);">src/content/blog/</code>
-              </span>
-            </div>
-            <div role="listitem" class="flex items-start gap-2">
-              <span aria-hidden="true" class="text-accent select-none mt-px">$</span>
-              <span class="text-secondary">
-                Tweak layout in <code class="text-primary rounded px-1 py-0.5 text-[13px]" style="background: var(--color-divider);">src/layouts/BlogPost.astro</code>
-              </span>
-            </div>
-            <div class="flex items-center gap-2 mt-2">
-              <span aria-hidden="true" class="text-accent-warm select-none">▶</span>
-              <span class="text-accent-warm text-[13px]">Ready.</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </main>
 
     <Footer />
