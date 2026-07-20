@@ -1,44 +1,155 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #f5f5f7;
-  --color-surface: rgba(255, 255, 255, 0.72);
-  --color-primary: #1d1d1f;
-  --color-secondary: #86868b;
-  --color-accent: #0071e3;
-  --color-accent-hover: #0077ed;
-  --color-divider: rgba(0, 0, 0, 0.06);
-  --color-code-bg: rgba(0, 0, 0, 0.04);
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* ─── Futuristic dark palette — all in OKLCH ─── */
+  /* Background: deep space near-black with a cool blue tint */
+  --color-background:    oklch(0.10 0.012 260);
+  /* Surface: slightly lifted panel/card background */
+  --color-surface:       oklch(0.145 0.018 260);
+  /* Surface hover: card hover state */
+  --color-surface-hover: oklch(0.18 0.022 260);
+  /* Border / divider */
+  --color-divider:       oklch(0.25 0.02 260);
 
-  --radius-card: 28px;
+  /* Primary text: near-white — contrast ≈ 17:1 on --background ✓ AA */
+  --color-primary:       oklch(0.96 0.005 220);
+  /* Secondary text: muted — contrast ≈ 7.2:1 on --background ✓ AA */
+  --color-secondary:     oklch(0.72 0.02 220);
+  /* Muted text: lower priority — contrast ≈ 4.6:1 ✓ AA for large/UI text */
+  --color-muted:         oklch(0.55 0.025 240);
+
+  /* Accent cyan: neon highlight — contrast ≈ 9:1 on --background ✓ AA */
+  --color-accent:        oklch(0.82 0.14 195);
+  /* Accent hover */
+  --color-accent-hover:  oklch(0.88 0.16 195);
+  /* Accent amber: warm secondary highlight — contrast ≈ 8.5:1 ✓ AA */
+  --color-accent-warm:   oklch(0.84 0.15 85);
+
+  /* Code block background */
+  --color-code-bg:       oklch(0.17 0.02 260);
+
+  /* Glow effect colors */
+  --color-glow-cyan:     oklch(0.82 0.14 195 / 0.15);
+  --color-glow-warm:     oklch(0.84 0.15 85 / 0.12);
+
+  /* Typography: Inter + JetBrains Mono */
+  --font-sans: 'Inter', 'Inter Fallback', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', ui-monospace, monospace;
+
+  --radius-card: 16px;
   --radius-pill: 9999px;
 }
 
+/* ── Google Fonts import ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Base ── */
 html {
   scroll-behavior: smooth;
+  background-color: var(--color-background);
+  color-scheme: dark;
 }
 
 body {
   @apply bg-background text-primary font-sans antialiased;
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.65;
   letter-spacing: -0.01em;
 }
 
+/* ── Scanline texture overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    oklch(0 0 0 / 0.04) 0px,
+    oklch(0 0 0 / 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* ── Text selection ── */
 ::selection {
-  background: rgba(0, 113, 227, 0.18);
+  background: oklch(0.82 0.14 195 / 0.25);
   color: var(--color-primary);
 }
 
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-divider);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+}
+
+/* ── Focus visible ring ── */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Code ── */
+code, kbd, pre {
+  font-family: var(--font-mono);
+}
+
+/* ── View transitions ── */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
-::view-transition-old(root) {
-  z-index: 1;
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 9999; }
+
+/* ── Prose overrides for dark theme ── */
+.prose {
+  --tw-prose-body:       var(--color-primary);
+  --tw-prose-headings:   var(--color-primary);
+  --tw-prose-lead:       var(--color-secondary);
+  --tw-prose-links:      var(--color-accent);
+  --tw-prose-bold:       var(--color-primary);
+  --tw-prose-counters:   var(--color-secondary);
+  --tw-prose-bullets:    var(--color-accent);
+  --tw-prose-hr:         var(--color-divider);
+  --tw-prose-quotes:     var(--color-primary);
+  --tw-prose-quote-borders: var(--color-accent);
+  --tw-prose-captions:   var(--color-secondary);
+  --tw-prose-code:       var(--color-accent);
+  --tw-prose-pre-code:   var(--color-primary);
+  --tw-prose-pre-bg:     var(--color-code-bg);
+  --tw-prose-th-borders: var(--color-divider);
+  --tw-prose-td-borders: var(--color-divider);
 }
-::view-transition-new(root) {
-  z-index: 9999;
+
+/* ── Utility: neon glow on accent ── */
+.glow-accent {
+  text-shadow: 0 0 20px oklch(0.82 0.14 195 / 0.6);
+}
+.glow-warm {
+  text-shadow: 0 0 20px oklch(0.84 0.15 85 / 0.5);
+}
+
+/* ── Card border glow on hover ── */
+.card-glow {
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.card-glow:hover {
+  border-color: oklch(0.82 0.14 195 / 0.45);
+  box-shadow: 0 0 0 1px oklch(0.82 0.14 195 / 0.12),
+              0 4px 32px oklch(0.82 0.14 195 / 0.08);
 }
