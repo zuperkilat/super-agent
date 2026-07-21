@@ -17,7 +17,15 @@
     "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.1.1",
+    "drizzle-orm": "^0.30.10",
+    "groq-sdk": "^0.5.0",
+    "pg": "^8.11.3",
     "sharp": "^0.35.0",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.6",
+    "drizzle-kit": "^0.20.14"
   }
 }
