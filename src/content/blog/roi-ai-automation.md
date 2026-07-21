@@ -165,3 +165,20 @@ Gunakan grafik yang simpel: before vs after untuk setiap metrik, dengan confiden
 - Alice Labs, "AI Automation ROI Benchmark Report 2026". https://alicelabs.ai/reports/ai-automation-roi-benchmark-2026
 - Google for Developers, "PageSpeed Insights", untuk correlasi antara kecepatan dan conversion.
 - Super Kilat, "AI Agentic UMKM", 2026. https://superkilat.com/layanan/ai-agentic-umkm
+
+
+---
+
+### Artikel Terkait di Blog Ini
+
+- [RAG vs Agents: When to Use Each Pattern](./rag-vs-agents.md) — trade-off antara RAG dan agentic approach
+- [LangGraph Agent Patterns](./langgraph-agent-patterns.md) — orchestration stateful agents
+- [Tool Design Patterns](./tool-design-patterns.md) — cara merancang tools yang benar-benar dipakai LLM
+- [Prompt Engineering untuk Agentic Systems](./prompt-engineering-agentic-systems.md) — merancang reasoning dan tool calling prompts
+- [Memory Systems for Agents](./memory-systems-for-agents.md) — state management untuk conversation
+- [Agent Testing dan Evaluasi](./agent-testing-evaluation.md) — testing dan grading agent behavior
+- [MCP: Model Context Protocol](./mcp-model-context-protocol.md) — standar tool integration
+- [Hermes Agent](./hermes-agent.md) — framework agentic production-ready
+- [AI Infrastructure: Docker & Kubernetes untuk LLM Serving](./ai-infrastructure-docker-kubernetes-llm.md)
+- [RAG in Production](./rag-in-production.md) — chunking, embedding, vector DB, optimization
+- [Agentic AI Fundamentals](./agentic-ai-fundamentals-2026.md) — konsep dasar sistem otonom

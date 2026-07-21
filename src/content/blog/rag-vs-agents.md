@@ -247,3 +247,20 @@ Use this data to decide: expand RAG coverage, add agents for complex queries, or
 ---
 
 The future of production systems combines both. RAG handles 85-95% of queries cheaply and fast. Agents handle the remaining 5-15% of complex scenarios where reasoning and action are required. This hybrid approach gives you both speed and capability.
+
+
+---
+
+### Artikel Terkait di Blog Ini
+
+- [RAG vs Agents: When to Use Each Pattern](./rag-vs-agents.md) — trade-off antara RAG dan agentic approach
+- [LangGraph Agent Patterns](./langgraph-agent-patterns.md) — orchestration stateful agents
+- [Tool Design Patterns](./tool-design-patterns.md) — cara merancang tools yang benar-benar dipakai LLM
+- [Prompt Engineering untuk Agentic Systems](./prompt-engineering-agentic-systems.md) — merancang reasoning dan tool calling prompts
+- [Memory Systems for Agents](./memory-systems-for-agents.md) — state management untuk conversation
+- [Agent Testing dan Evaluasi](./agent-testing-evaluation.md) — testing dan grading agent behavior
+- [MCP: Model Context Protocol](./mcp-model-context-protocol.md) — standar tool integration
+- [Hermes Agent](./hermes-agent.md) — framework agentic production-ready
+- [AI Infrastructure: Docker & Kubernetes untuk LLM Serving](./ai-infrastructure-docker-kubernetes-llm.md)
+- [RAG in Production](./rag-in-production.md) — chunking, embedding, vector DB, optimization
+- [Agentic AI Fundamentals](./agentic-ai-fundamentals-2026.md) — konsep dasar sistem otonom

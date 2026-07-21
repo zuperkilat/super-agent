@@ -306,3 +306,20 @@ The key: fine-tuning pays for itself immediately when you have volume.
 ---
 
 Fine-tuning isn't a one-time investment—it's an ongoing capability. Organizations fine-tuning agents continuously improve in 2026 while those using only off-the-shelf models plateau quickly.
+
+
+---
+
+### Artikel Terkait di Blog Ini
+
+- [RAG vs Agents: When to Use Each Pattern](./rag-vs-agents.md) — trade-off antara RAG dan agentic approach
+- [LangGraph Agent Patterns](./langgraph-agent-patterns.md) — orchestration stateful agents
+- [Tool Design Patterns](./tool-design-patterns.md) — cara merancang tools yang benar-benar dipakai LLM
+- [Prompt Engineering untuk Agentic Systems](./prompt-engineering-agentic-systems.md) — merancang reasoning dan tool calling prompts
+- [Memory Systems for Agents](./memory-systems-for-agents.md) — state management untuk conversation
+- [Agent Testing dan Evaluasi](./agent-testing-evaluation.md) — testing dan grading agent behavior
+- [MCP: Model Context Protocol](./mcp-model-context-protocol.md) — standar tool integration
+- [Hermes Agent](./hermes-agent.md) — framework agentic production-ready
+- [AI Infrastructure: Docker & Kubernetes untuk LLM Serving](./ai-infrastructure-docker-kubernetes-llm.md)
+- [RAG in Production](./rag-in-production.md) — chunking, embedding, vector DB, optimization
+- [Agentic AI Fundamentals](./agentic-ai-fundamentals-2026.md) — konsep dasar sistem otonom

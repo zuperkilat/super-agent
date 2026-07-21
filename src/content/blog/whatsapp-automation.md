@@ -192,3 +192,20 @@ Ya. Melalui Cloud API, webhook, atau Meta Business Agent dengan custom connector
 - Meta for Developers, "WhatsApp Cloud API Pricing", dokumentasi resmi, efektif 1 April 2026. https://developers.facebook.com/docs/whatsapp/pricing
 - Meta for Developers, "WhatsApp Business Platform Changelog", 2026. https://developers.facebook.com/docs/whatsapp/business-platform/changelog
 - Meta Business, "Developer Hub", WhatsApp for Business, 2026. https://whatsappbusiness.com/developers/developer-hub/
+
+
+---
+
+### Artikel Terkait di Blog Ini
+
+- [RAG vs Agents: When to Use Each Pattern](./rag-vs-agents.md) — trade-off antara RAG dan agentic approach
+- [LangGraph Agent Patterns](./langgraph-agent-patterns.md) — orchestration stateful agents
+- [Tool Design Patterns](./tool-design-patterns.md) — cara merancang tools yang benar-benar dipakai LLM
+- [Prompt Engineering untuk Agentic Systems](./prompt-engineering-agentic-systems.md) — merancang reasoning dan tool calling prompts
+- [Memory Systems for Agents](./memory-systems-for-agents.md) — state management untuk conversation
+- [Agent Testing dan Evaluasi](./agent-testing-evaluation.md) — testing dan grading agent behavior
+- [MCP: Model Context Protocol](./mcp-model-context-protocol.md) — standar tool integration
+- [Hermes Agent](./hermes-agent.md) — framework agentic production-ready
+- [AI Infrastructure: Docker & Kubernetes untuk LLM Serving](./ai-infrastructure-docker-kubernetes-llm.md)
+- [RAG in Production](./rag-in-production.md) — chunking, embedding, vector DB, optimization
+- [Agentic AI Fundamentals](./agentic-ai-fundamentals-2026.md) — konsep dasar sistem otonom
