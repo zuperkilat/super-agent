@@ -6,10 +6,48 @@ import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { db, schema } from '../../lib/db';
+import { eq, desc } from 'drizzle-orm';
 
-const posts = (await getCollection('blog')).sort(
+// Fetch static blog posts
+const staticPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+// Fetch AI-generated posts from Neon
+let aiPosts: any[] = [];
+if (process.env.DATABASE_URL) {
+  try {
+    const dbPosts = await db
+      .select()
+      .from(schema.blogPosts)
+      .where(eq(schema.blogPosts.status, 'published'))
+      .orderBy(desc(schema.blogPosts.publishedAt))
+      .limit(100);
+    
+    aiPosts = dbPosts.map((post: any) => ({
+      id: post.slug,
+      data: {
+        title: post.title,
+        description: post.description,
+        pubDate: post.publishedAt || post.createdAt,
+        heroImage: null,
+        isAiGenerated: true,
+      },
+      slug: post.slug,
+      body: post.content,
+    }));
+  } catch (error) {
+    console.warn('Failed to fetch AI posts from database:', error);
+  }
+}
+
+// Combine and sort all posts
+const allPosts = [...staticPosts, ...aiPosts].sort(
+  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf(),
+);
+
+const posts = allPosts;
 ---
 
 <!doctype html>
@@ -54,9 +92,16 @@ const posts = (await getCollection('blog')).sort(
                   </div>
                 )}
                 <div class="flex flex-col gap-2 p-5">
-                  <p class="text-[12px] font-mono text-muted">
-                    <FormattedDate date={post.data.pubDate} />
-                  </p>
+                  <div class="flex items-center justify-between gap-2">
+                    <p class="text-[12px] font-mono text-muted">
+                      <FormattedDate date={post.data.pubDate} />
+                    </p>
+                    {post.data.isAiGenerated && (
+                      <span class="text-[11px] font-mono px-2 py-1 rounded bg-accent bg-opacity-20 text-accent">
+                        AI Generated
+                      </span>
+                    )}
+                  </div>
                   <h2 class="text-[17px] font-semibold text-primary tracking-tight leading-snug group-hover:text-accent transition-colors duration-200">
                     {post.data.title}
                   </h2>

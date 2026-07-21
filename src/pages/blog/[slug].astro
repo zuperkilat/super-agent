@@ -1,0 +1,214 @@
+---
+import { getCollection } from 'astro:content'
+import type { GetStaticPaths } from 'astro'
+import BaseHead from '../../components/BaseHead.astro'
+import Footer from '../../components/Footer.astro'
+import FormattedDate from '../../components/FormattedDate.astro'
+import Header from '../../components/Header.astro'
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts'
+import { db, schema } from '../../lib/db'
+import { eq } from 'drizzle-orm'
+import { Image } from 'astro:assets'
+
+interface Props {
+  post: any
+}
+
+const { slug } = Astro.params
+const { post } = Astro.props
+
+// If this is an AI post, render special layout
+const isAiGenerated = post.isAiGenerated
+
+export async function getStaticPaths() {
+  // Get all static posts from content
+  const staticPosts = await getCollection('blog')
+
+  // Get all AI-generated published posts from database
+  let aiPosts: any[] = []
+  if (process.env.DATABASE_URL) {
+    try {
+      const dbPosts = await db
+        .select()
+        .from(schema.blogPosts)
+        .where(eq(schema.blogPosts.status, 'published'))
+
+      aiPosts = dbPosts.map((post: any) => ({
+        params: { slug: post.slug },
+        props: {
+          post: {
+            title: post.title,
+            slug: post.slug,
+            description: post.description,
+            pubDate: post.publishedAt || post.createdAt,
+            body: post.content,
+            isAiGenerated: true,
+          },
+        },
+      }))
+    } catch (error) {
+      console.warn('Failed to fetch AI posts for static generation:', error)
+    }
+  }
+
+  // Convert static posts to the same format
+  const staticPosts_formatted = staticPosts.map((post) => ({
+    params: { slug: post.id },
+    props: {
+      post: {
+        title: post.data.title,
+        slug: post.id,
+        description: post.data.description,
+        pubDate: post.data.pubDate,
+        body: post.body,
+        isAiGenerated: false,
+      },
+    },
+  }))
+
+  return [...staticPosts_formatted, ...aiPosts]
+}
+
+---
+
+<!doctype html>
+<html lang="en" class="bg-background">
+  <head>
+    <BaseHead
+      title={`${post.title} — ${SITE_TITLE}`}
+      description={post.description || SITE_DESCRIPTION}
+    />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="mx-auto max-w-3xl px-4 py-12 flex-1 relative z-[1]">
+      <!-- Header -->
+      <article class="mb-12">
+        <div class="mb-6">
+          <div class="flex items-center gap-3 mb-3">
+            <p class="text-[12px] font-mono text-accent tracking-widest uppercase">
+              <FormattedDate date={post.pubDate} />
+            </p>
+            {isAiGenerated && (
+              <span class="text-[11px] font-mono px-2 py-1 rounded bg-accent bg-opacity-20 text-accent">
+                AI Generated
+              </span>
+            )}
+          </div>
+          <h1 class="text-[36px] sm:text-[48px] leading-[1.06] tracking-tight text-primary font-sans mb-4 text-balance">
+            {post.title}
+          </h1>
+          {post.description && (
+            <p class="text-[18px] text-secondary text-pretty">
+              {post.description}
+            </p>
+          )}
+        </div>
+
+        <!-- Content -->
+        <div class="prose prose-invert max-w-none">
+          <Fragment set:html={post.body} />
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-12 pt-8 border-t border-muted border-opacity-20">
+          <p class="text-sm text-muted">
+            {isAiGenerated
+              ? 'This post was generated using AI technology by Groq and may have been edited by humans.'
+              : 'Written by Super Kilat'}
+          </p>
+        </div>
+      </article>
+
+      <!-- Navigation -->
+      <nav class="mt-12 flex items-center justify-between">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-1 text-accent font-mono text-sm hover:text-accent-warm transition-colors"
+        >
+          <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" class="rotate-180">
+            <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to blog
+        </a>
+      </nav>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .prose-invert {
+    --tw-prose-body: var(--color-secondary);
+    --tw-prose-headings: var(--color-primary);
+    --tw-prose-lead: var(--color-secondary);
+    --tw-prose-links: var(--color-accent);
+    --tw-prose-bold: var(--color-primary);
+    --tw-prose-counters: var(--color-accent);
+    --tw-prose-bullets: var(--color-accent);
+    --tw-prose-hr: var(--color-muted);
+    --tw-prose-quotes: var(--color-muted);
+    --tw-prose-quote-borders: var(--color-accent);
+    --tw-prose-captions: var(--color-muted);
+    --tw-prose-code: var(--color-accent);
+    --tw-prose-pre-code: var(--color-primary);
+    --tw-prose-pre-bg: var(--color-surface);
+    --tw-prose-th-borders: var(--color-muted);
+    --tw-prose-td-borders: var(--color-muted);
+  }
+
+  .prose-invert h1,
+  .prose-invert h2,
+  .prose-invert h3,
+  .prose-invert h4,
+  .prose-invert h5,
+  .prose-invert h6 {
+    color: var(--color-accent);
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+  }
+
+  .prose-invert a {
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .prose-invert a:hover {
+    color: var(--color-accent-warm);
+    text-decoration: underline;
+  }
+
+  .prose-invert code {
+    background-color: var(--color-background);
+    padding: 0.2em 0.4em;
+    border-radius: 0.3em;
+  }
+
+  .prose-invert pre {
+    background-color: var(--color-background);
+    padding: 1em;
+    border-radius: 0.5em;
+    overflow-x: auto;
+    border: 1px solid var(--color-muted);
+    border-opacity: 0.2;
+  }
+
+  .prose-invert blockquote {
+    border-left: 4px solid var(--color-accent);
+    padding-left: 1em;
+    font-style: italic;
+  }
+
+  :root {
+    --color-background: oklch(0.10 0.012 260);
+    --color-surface: oklch(0.145 0.018 260);
+    --color-primary: oklch(0.96 0.005 220);
+    --color-secondary: oklch(0.72 0.02 220);
+    --color-muted: oklch(0.55 0.025 240);
+    --color-accent: oklch(0.82 0.14 195);
+    --color-accent-warm: oklch(0.84 0.15 85);
+  }
+</style>
+
+
