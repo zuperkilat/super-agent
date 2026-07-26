@@ -1,0 +1,59 @@
+---
+title: 'RLHF Deep Dive: Reinforcement Learning for LLMs'
+description: 'Panduan lengkap mengimplementasikan RLHF di production.'
+pubDate: '2026-07-27'
+heroImage: '../../assets/blog-placeholder-3.jpg'
+---
+
+## Proses RLHF
+
+1. Supervised fine-tuning pada expert demonstrations.
+2. Train reward model dari human rankings.
+3. PPO fine-tuning menggunakan reward model.
+
+## Challenges
+
+Reward hacking: model belajar exploit reward model. Solution: adversarial validation dan regularizer.
+
+## Alternatif
+
+DPO dan KTO lebih sederhana dan stable. Gunakan RLHF hanya jika butuh extreme fine-grained control.
+## FAQ
+
+**Q: Bagaimana cara menerapkan ini?**
+A: Mulai dari pilot project kecil. Fokus pada use case dengan measurable ROI.
+
+**Q: Apakah ini scalable?**
+A: Ya, gunakan stateless design, caching, dan observability.
+
+**Q: Berapa biaya implementasi?**
+A: Tergantung kompleksitas. Start dengan open-source stack untuk reduce cost.
+
+**Q: Bagaimana mengukur success?**
+A: Gunakan metrics: pass rate, latency, dan cost per task.
+
+**Q: Apakah glossary tersedia?**
+A: Ya, lihat [glossary](/glossary/) untuk definisi istilah teknis yang digunakan dalam artikel ini.
+
+## Backlink References
+
+- [OpenAI RLHF Paper](https://arxiv.org/abs/2009.01325)
+---
+
+Hubungan artikel ini dengan artikel lain di blog:
+
+- Lihat [RAG vs Agents](./rag-vs-agents.md)
+- Lihat [Prompt Engineering untuk Agentic Systems](./prompt-engineering-agentic-systems.md)
+- Lihat [Memory Systems for Agents](./memory-systems-for-agents.md)
+
+---
+
+### Artikel Terkait di Blog Ini
+- [Agentic AI Fundamentals](./agentic-ai-fundamentals-2026.md)
+- [Tool Design Patterns](./tool-design-patterns.md)
+- [LangGraph Agent Patterns](./langgraph-agent-patterns.md)
+- [Prompt Engineering untuk Agentic Systems](./prompt-engineering-agentic-systems.md)
+- [Memory Systems for Agents](./memory-systems-for-agents.md)
+- [MCP: Model Context Protocol](./mcp-model-context-protocol.md)
+- [RAG vs Agents](./rag-vs-agents.md)
+- [RAG in Production](./rag-in-production.md)
