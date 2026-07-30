@@ -15,7 +15,7 @@ const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
     className,
     'rounded-md transition-all duration-200 relative',
     isActive
-      ? 'text-accent'
+      ? 'text-primary'
       : 'text-secondary hover:text-primary'
   ]}
   aria-current={isActive ? 'page' : undefined}
@@ -25,8 +25,7 @@ const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
   {isActive && (
     <span
       aria-hidden="true"
-      class="absolute inset-x-2 -bottom-px h-px"
-      style="background: var(--color-accent); box-shadow: 0 0 6px oklch(0.82 0.14 195 / 0.7);"
+      class="absolute inset-x-2 -bottom-px h-px bg-primary"
     ></span>
   )}
 </a>

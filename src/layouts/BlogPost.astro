@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
@@ -11,11 +10,10 @@ type Props = CollectionEntry<'blog'>['data'];
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
-<html lang="en" class="bg-background">
+<html lang="en">
   <head>
     <BaseHead title={title} description={description} />
   </head>
-
   <body class="min-h-screen flex flex-col">
     <Header />
     <main class="mx-auto max-w-6xl px-4 flex-1 relative z-[1]">
@@ -25,13 +23,12 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
           <!-- Meta -->
           <div class="flex flex-wrap items-center gap-3 mb-8">
             <span
-              class="inline-flex items-center rounded-full px-3 py-1 text-[12px] font-mono font-medium"
-              style="background: var(--color-surface); border: 1px solid var(--color-divider); color: var(--color-accent);"
+              class="inline-flex items-center rounded-full px-3 py-1 text-[12px] font-mono font-medium border border-divider bg-surface-alt text-secondary"
             >
               <FormattedDate date={pubDate} />
             </span>
             {updatedDate && (
-              <span class="text-[13px] font-mono text-muted">
+              <span class="text-[13px] font-mono text-secondary">
                 Updated: <FormattedDate date={updatedDate} />
               </span>
             )}
@@ -48,19 +45,17 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
           )}
 
           <!-- Divider -->
-          <div class="h-px mb-10" style="background: linear-gradient(90deg, var(--color-accent), var(--color-divider));"></div>
+          <div class="h-px mb-10 bg-divider"></div>
         </div>
 
         <!-- Hero image -->
         {heroImage && (
           <div class="mt-2 mb-12">
-            <Image
-              class="w-full rounded-[16px]"
+            <img
+              class="w-full rounded-[10px]"
               style="border: 1px solid var(--color-divider);"
-              width={1280}
-              height={720}
-              alt={title}
               src={heroImage}
+              alt={title}
             />
           </div>
         )}
@@ -74,7 +69,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         <div class="mx-auto max-w-3xl mt-16 pt-8 border-t border-divider">
           <a
             href="/blog"
-            class="inline-flex items-center gap-2 text-[14px] font-mono text-secondary hover:text-accent transition-colors duration-200"
+            class="inline-flex items-center gap-2 text-[14px] font-mono text-secondary hover:text-primary transition-colors duration-200"
           >
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M12 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>

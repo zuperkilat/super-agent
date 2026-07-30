@@ -8,12 +8,19 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://superkilat.ai',
   integrations: [mdx(), sitemap()],
-
-
 
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      // drizzle-orm imports are server-only; keep them external
+      noExternal: [],
+    },
+  },
+  build: {
+    rolldownOptions: {
+      external: ['drizzle-orm', 'drizzle-orm/*', 'pg', 'groq-sdk'],
+    },
   },
 });

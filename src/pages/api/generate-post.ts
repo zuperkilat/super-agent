@@ -1,8 +1,5 @@
 import type { APIRoute } from 'astro'
 import { generateBlogPost } from '../../lib/ai/groq'
-import { db, schema } from '../../lib/db'
-import { eq } from 'drizzle-orm'
-import { v4 as uuidv4 } from 'uuid'
 
 // Rate limiting: max 3 posts per day
 const RATE_LIMIT = 3
@@ -14,16 +11,30 @@ const rateLimitMap: Record<string, number[]> = {}
 function checkRateLimit(userId: string): boolean {
   const now = Date.now()
   const userAttempts = rateLimitMap[userId] || []
-
   // Filter out attempts older than 24 hours
   const recentAttempts = userAttempts.filter((time) => now - time < RATE_LIMIT_WINDOW)
-
   if (recentAttempts.length >= RATE_LIMIT) {
     return false
   }
-
   rateLimitMap[userId] = [...recentAttempts, now]
   return true
+}
+
+// Use built-in crypto for UUIDs to avoid server-only deps at build time.
+const uuid = () => crypto.randomUUID()
+
+// Resolve server-only modules at request time so static builds don't choke on them.
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
+
+function getDb() {
+  try {
+    const { db, schema } = require('../../lib/db')
+    return { db, schema }
+  } catch (error) {
+    console.warn('Database module unavailable in current build context:', error)
+    return { db: null, schema: null }
+  }
 }
 
 export const POST: APIRoute = async (context) => {
@@ -66,25 +77,33 @@ export const POST: APIRoute = async (context) => {
       targetWordCount: body.targetWordCount || 1500,
     })
 
-    // Record generation in history
-    const historyId = uuidv4()
-    await db.insert(schema.aiGenerationHistory).values({
-      id: historyId,
-      userId: userId as any,
-      topic: body.topic,
-      prompt: `Generate blog post about ${body.topic} in ${body.category}`,
-      modelUsed: 'groq-mixtral-8x7b',
-      generatedContent: generated.content,
-      tokensUsed: generated.tokensUsed,
-      generationTimeMs: generated.generationTimeMs,
-      status: 'success',
-    })
+    // Record generation in history if DB is available
+    const { db, schema } = getDb()
+    let historyId = null as string | null
+    if (db && schema) {
+      historyId = uuid()
+      try {
+        await db.insert(schema.aiGenerationHistory).values({
+          id: historyId,
+          userId: userId as any,
+          topic: body.topic,
+          prompt: `Generate blog post about ${body.topic} in ${body.category}`,
+          modelUsed: 'groq-mixtral-8x7b',
+          generatedContent: generated.content,
+          tokensUsed: generated.tokensUsed,
+          generationTimeMs: generated.generationTimeMs,
+          status: 'success',
+        })
+      } catch (error) {
+        console.warn('Failed to record generation history:', error)
+      }
+    }
 
     // Publish if requested
     let postId = null
-    if (body.publish) {
+    if (body.publish && db && schema) {
       const newPost = {
-        id: uuidv4(),
+        id: uuid(),
         title: generated.title,
         slug: generated.slug,
         description: generated.description,
@@ -98,10 +117,16 @@ export const POST: APIRoute = async (context) => {
       await db.insert(schema.blogPosts).values(newPost as any)
 
       // Update history with post ID
-      await db
-        .update(schema.aiGenerationHistory)
-        .set({ blogPostId: newPost.id as any })
-        .where(eq(schema.aiGenerationHistory.id, historyId as any))
+      if (postId) {
+        try {
+          await (db as any)
+            .update(schema.aiGenerationHistory)
+            .set({ blogPostId: newPost.id as any })
+            .where({ id: historyId as string })
+        } catch (error) {
+          console.warn('Failed to link generation history:', error)
+        }
+      }
 
       postId = newPost.id
     }

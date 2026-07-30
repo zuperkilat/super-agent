@@ -1,6 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
@@ -51,7 +51,7 @@ const posts = allPosts;
 ---
 
 <!doctype html>
-<html lang="en" class="bg-background">
+<html lang="en">
   <head>
     <BaseHead title={`${SITE_TITLE} — Blog`} description={SITE_DESCRIPTION} />
   </head>
@@ -62,7 +62,7 @@ const posts = allPosts;
 
         <!-- Page header -->
         <div class="mb-12">
-          <p class="text-[12px] font-mono text-accent tracking-widest uppercase mb-3">Archive</p>
+          <p class="text-[12px] font-mono text-secondary tracking-widest uppercase mb-3">Archive</p>
           <h1 class="text-[36px] sm:text-[48px] leading-[1.06] tracking-tight text-primary font-sans mb-3 text-balance">
             Blog
           </h1>
@@ -75,34 +75,32 @@ const posts = allPosts;
             <article role="listitem">
               <a
                 href={`/blog/${post.id}/`}
-                class="card-glow group flex flex-col gap-0 rounded-[16px] border border-divider overflow-hidden transition-all duration-250 h-full"
-                style="background: var(--color-surface);"
+                class="card-minimal group flex flex-col gap-0 rounded-[10px] border border-divider overflow-hidden transition-all duration-200 h-full"
                 aria-label={`Read: ${post.data.title}`}
               >
                 {post.data.heroImage && (
                   <div class="overflow-hidden aspect-[16/9]" style="background: var(--color-code-bg);">
-                    <Image
-                      class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.03]"
-                      width={1280}
-                      height={720}
+                    <img
+                      class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.02]"
                       src={post.data.heroImage}
                       alt=""
                       aria-hidden="true"
+                      loading="lazy"
                     />
                   </div>
                 )}
                 <div class="flex flex-col gap-2 p-5">
                   <div class="flex items-center justify-between gap-2">
-                    <p class="text-[12px] font-mono text-muted">
+                    <p class="text-[12px] font-mono text-secondary">
                       <FormattedDate date={post.data.pubDate} />
                     </p>
                     {post.data.isAiGenerated && (
-                      <span class="text-[11px] font-mono px-2 py-1 rounded bg-accent bg-opacity-20 text-accent">
+                      <span class="text-[11px] font-mono px-2 py-1 rounded bg-surface-alt text-secondary border border-divider">
                         AI Generated
                       </span>
                     )}
                   </div>
-                  <h2 class="text-[17px] font-semibold text-primary tracking-tight leading-snug group-hover:text-accent transition-colors duration-200">
+                  <h2 class="text-[17px] font-semibold text-primary tracking-tight leading-snug group-hover:text-secondary transition-colors duration-200">
                     {post.data.title}
                   </h2>
                   {post.data.description && (
@@ -110,7 +108,7 @@ const posts = allPosts;
                       {post.data.description}
                     </p>
                   )}
-                  <div class="flex items-center gap-1 mt-auto pt-2 text-[13px] font-mono text-accent">
+                  <div class="flex items-center gap-1 mt-auto pt-2 text-[13px] font-mono text-secondary">
                     <span>Read more</span>
                     <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" class="transition-transform duration-200 group-hover:translate-x-0.5">
                       <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>

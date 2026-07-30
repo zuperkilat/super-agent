@@ -2,281 +2,482 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { getCollection } from 'astro:content';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-
-// Get all blog posts
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-
-// Featured post (most recent)
-const featuredPost = posts[0];
-const recentPosts = posts.slice(1, 4);
-
-// Blog categories with descriptions
-const categories = [
-  {
-    id: 'agentic-ai',
-    title: 'Agentic AI',
-    description: 'Building autonomous agents and multi-step reasoning systems',
-    icon: '⚙️',
-    gradient: 'from-cyan-400 to-blue-500'
-  },
-  {
-    id: 'ai-engineering',
-    title: 'AI Engineering',
-    description: 'Production AI systems, fine-tuning, and deployment strategies',
-    icon: '🔬',
-    gradient: 'from-purple-400 to-pink-500'
-  },
-  {
-    id: 'business-automation',
-    title: 'Business Automation',
-    description: 'Workflow optimization and process automation with AI',
-    icon: '⚡',
-    gradient: 'from-amber-400 to-orange-500'
-  },
-  {
-    id: 'seo-geo',
-    title: 'SEO & GEO',
-    description: 'Search optimization and geolocation-based strategies',
-    icon: '📍',
-    gradient: 'from-green-400 to-teal-500'
-  },
-];
 ---
 
 <!doctype html>
-<html lang="en" class="bg-background">
+<html lang="id" dir="ltr">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+      title="Super Kilat — Agentic AI Professional in Indonesia"
+      description="Super Kilat adalah agensi Agentic AI profesional di Indonesia. Kami membangun AI agents, workflow otomasi, dan sistem pintar dengan Hermes, OpenClaw, n8n, LangGraph, dan Claude Code."
+    />
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-background text-primary font-sans antialiased">
     <Header />
 
-    <main class="mx-auto max-w-7xl px-4 py-16 flex-1 relative z-[1] w-full">
-      
-      <!-- Hero Section -->
-      <section class="mb-24">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <!-- Left: Hero Text -->
-          <div class="max-w-2xl">
-            <div class="inline-flex items-center gap-2 border border-divider rounded-full px-3 py-1 mb-8 font-mono text-[12px] text-secondary">
-              <span aria-hidden="true" class="block w-1.5 h-1.5 rounded-full bg-accent" style="animation: pulse-dot 2.4s ease-in-out infinite; box-shadow: 0 0 6px oklch(0.82 0.14 195 / 0.8);"></span>
-              EXPERTISE VERIFIED
+    <main class="flex-1">
+      <!-- ─── Hero ─── -->
+      <section id="beranda" class="relative pt-[162px] pb-[110px] overflow-hidden">
+        <div class="absolute top-[-24%] right-[-8%] w-[700px] h-[700px] rounded-full pointer-events-none"
+             style="background: radial-gradient(circle, rgba(17,17,17,0.04), transparent 60%);"></div>
+
+        <div class="mx-auto max-w-6xl px-4 grid lg:grid-cols-2 gap-14 items-center relative z-[1]">
+          <!-- Left: Text -->
+          <div>
+            <div class="inline-flex items-center gap-2.5 border border-divider rounded-[12px] px-3.5 py-1.5 mb-8 text-[13px] font-mono text-secondary bg-surface-alt">
+              <span class="block w-[7px] h-[7px] rounded-full bg-primary" aria-hidden="true"></span>
+              Agentic AI Professional in Indonesia
             </div>
 
-            <h1 class="text-[42px] sm:text-[56px] lg:text-[64px] leading-[1.08] tracking-tight text-primary font-sans mb-6 text-balance">
-              Advanced&nbsp;<span class="text-accent glow-accent">AI Systems</span>&nbsp;for Modern Builders
+            <h1 class="font-serif tracking-[-0.03em] leading-[1.12] text-[clamp(2.2rem,5vw,3.8rem)] font-medium mb-6 text-balance"
+                style="font-family: 'Newsreader', 'Instrument Serif', Georgia, serif; letter-spacing: -0.03em;">
+              AI Agents yang <span class="text-secondary">Bekerja Sendiri</span>, Bukan Cuma Chatbot
             </h1>
-            
-            <p class="text-[17px] sm:text-[18px] leading-[1.7] text-secondary mb-8 text-pretty max-w-[55ch]">
-              Deep technical explorations into agentic AI, production engineering, business automation, and modern SEO/GEO strategies. Built for engineers and strategists.
+
+            <p class="text-[17px] leading-[1.7] text-muted mb-8 max-w-[560px] text-pretty"
+               style="font-family: 'SF Pro Display', 'Helvetica Neue', 'Switzer', system-ui, sans-serif;">
+              Kami membangun sistem AI agent yang bisa merencanakan, memanggil tools, mengingat konteks, dan menyelesaikan tugas tanpa intervensi manual. Dari otomasi workflow sampai RAG enterprise.
             </p>
 
-            <div class="flex flex-wrap gap-3">
-              <a
-                href="#featured"
-                class="inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-[14px] font-semibold font-mono transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                style="background: var(--color-accent); color: oklch(0.10 0.012 260); box-shadow: 0 0 20px oklch(0.82 0.14 195 / 0.3);"
-                onmouseover="this.style.boxShadow='0 0 32px oklch(0.82 0.14 195 / 0.5)'"
-                onmouseout="this.style.boxShadow='0 0 20px oklch(0.82 0.14 195 / 0.3)'"
-              >
-                Explore articles
-                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+            <div class="flex flex-wrap gap-3.5">
+              <a href="#kontak"
+                 class="inline-flex items-center justify-center gap-2 px-[26px] py-[15px] rounded-[6px] font-semibold text-[1rem] bg-primary text-white border border-primary transition-transform duration-150 active:scale-[0.98] hover:bg-[#333333] hover:border-[#333333]">
+                Jadwalkan Konsultasi
               </a>
-              <a
-                href="/blog"
-                class="inline-flex items-center gap-2 rounded-md border border-divider px-5 py-2.5 text-[14px] font-medium font-mono text-secondary hover:text-primary hover:border-accent transition-all duration-200"
-              >
-                View archive
+              <a href="#layanan"
+                 class="inline-flex items-center justify-center gap-2 px-[26px] py-[15px] rounded-[6px] font-semibold text-[1rem] bg-white text-primary border border-divider hover:bg-surface-alt transition-colors duration-150">
+                Lihat Layanan
               </a>
             </div>
+
+            <p class="mt-[14px] text-[13px] text-[#a8a59d]"
+               style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;">
+              Repository open-source:
+              <a href="https://github.com/zuperkilat" class="underline underline-offset-[3px]">github.com/zuperkilat</a>
+            </p>
           </div>
 
-          <!-- Right: Featured/Visual -->
-          <div class="relative hidden lg:block">
-            <div class="absolute inset-0 rounded-[24px] blur-2xl opacity-30" style="background: linear-gradient(135deg, oklch(0.82 0.14 195), oklch(0.84 0.15 85));"></div>
-            <div class="relative rounded-[24px] border border-divider p-8 overflow-hidden" style="background: var(--color-surface); backdrop-filter: blur(20px);">
-              <div class="space-y-4">
-                <div class="h-3 w-16 rounded bg-accent opacity-60"></div>
-                <div class="h-3 w-full rounded bg-muted opacity-40"></div>
-                <div class="h-3 w-full rounded bg-muted opacity-40"></div>
-                <div class="h-3 w-24 rounded bg-muted opacity-40"></div>
-                <div class="mt-6 pt-6 border-t border-divider">
-                  <div class="h-3 w-20 rounded bg-accent-warm opacity-60"></div>
+          <!-- Right: Terminal Visual -->
+          <div class="hidden lg:block">
+            <div class="border border-divider rounded-[12px] p-6 bg-surface" style="box-shadow: 0 1px 0 rgba(0,0,0,0.03);">
+              <div class="rounded-[10px] overflow-hidden border border-divider bg-[#F7F6F3]">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-[#E8E8E6]">
+                  <span class="w-[10px] h-[10px] rounded-full bg-[#C9C7C2]"></span>
+                  <span class="w-[10px] h-[10px] rounded-full bg-[#C9C7C2]"></span>
+                  <span class="w-[10px] h-[10px] rounded-full bg-[#C9C7C2]"></span>
+                  <span class="ml-auto text-[13px] text-[#a8a59d] font-mono">superkilat.ai</span>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Category Highlights -->
-      <section class="mb-24">
-        <div class="mb-12">
-          <p class="text-[12px] font-mono text-accent tracking-widest uppercase mb-3">Topics</p>
-          <h2 class="text-[32px] sm:text-[40px] leading-[1.1] tracking-tight text-primary font-sans text-balance">
-            Four pillars of expertise
-          </h2>
-        </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {categories.map((cat) => (
-            <a
-              href={`#${cat.id}`}
-              class="card-glow group rounded-[16px] border border-divider p-6 transition-all duration-250 flex flex-col"
-              style="background: var(--color-surface);"
-            >
-              <div class="text-4xl mb-4 opacity-80 group-hover:opacity-100 transition-opacity">{cat.icon}</div>
-              <h3 class="text-[18px] font-semibold text-primary mb-2 leading-snug group-hover:text-accent transition-colors">
-                {cat.title}
-              </h3>
-              <p class="text-[14px] text-secondary leading-relaxed flex-1">
-                {cat.description}
-              </p>
-              <div class="flex items-center gap-1 mt-4 text-[13px] font-mono text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <span>Learn</span>
-                <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" class="transition-transform group-hover:translate-x-0.5">
-                  <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      <!-- Featured Post Section -->
-      {featuredPost && (
-        <section class="mb-24" id="featured">
-          <div class="mb-8">
-            <p class="text-[12px] font-mono text-accent-warm tracking-widest uppercase mb-3">Featured</p>
-            <h2 class="text-[32px] sm:text-[40px] leading-[1.1] tracking-tight text-primary font-sans text-balance">
-              Latest Article
-            </h2>
-          </div>
-
-          <a
-            href={`/blog/${featuredPost.id}/`}
-            class="card-glow group rounded-[20px] border border-divider overflow-hidden transition-all duration-250 block"
-            style="background: var(--color-surface);"
-          >
-            <div class="grid lg:grid-cols-2 gap-0">
-              {featuredPost.data.heroImage && (
-                <div class="overflow-hidden lg:order-2 aspect-[16/9] lg:aspect-auto lg:min-h-[340px]" style="background: var(--color-code-bg);">
-                  <img
-                    class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.05]"
-                    src={featuredPost.data.heroImage.src}
-                    alt=""
-                    aria-hidden="true"
-                  />
-                </div>
-              )}
-              <div class="flex flex-col justify-between p-8 lg:p-10">
-                <div>
-                  <p class="text-[12px] font-mono text-muted mb-3">
-                    {featuredPost.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                  </p>
-                  <h3 class="text-[28px] sm:text-[32px] font-semibold text-primary mb-4 leading-snug group-hover:text-accent transition-colors duration-200">
-                    {featuredPost.data.title}
-                  </h3>
-                  {featuredPost.data.description && (
-                    <p class="text-[15px] text-secondary leading-relaxed mb-6">
-                      {featuredPost.data.description}
-                    </p>
-                  )}
-                </div>
-                <div class="flex items-center gap-2 text-[13px] font-mono text-accent">
-                  <span>Read article</span>
-                  <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" class="transition-transform group-hover:translate-x-1">
-                    <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </a>
-        </section>
-      )}
-
-      <!-- Recent Posts Grid -->
-      {recentPosts.length > 0 && (
-        <section class="mb-24">
-          <div class="mb-8">
-            <p class="text-[12px] font-mono text-accent tracking-widest uppercase mb-3">Recent</p>
-            <h2 class="text-[32px] sm:text-[40px] leading-[1.1] tracking-tight text-primary font-sans text-balance">
-              More articles
-            </h2>
-          </div>
-
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label="Recent blog posts">
-            {recentPosts.map((post) => (
-              <article role="listitem">
-                <a
-                  href={`/blog/${post.id}/`}
-                  class="card-glow group flex flex-col gap-0 rounded-[16px] border border-divider overflow-hidden transition-all duration-250 h-full"
-                  style="background: var(--color-surface);"
-                  aria-label={`Read: ${post.data.title}`}
-                >
-                  {post.data.heroImage && (
-                    <div class="overflow-hidden aspect-[16/9]" style="background: var(--color-code-bg);">
-                      <img
-                        class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.03]"
-                        src={post.data.heroImage.src}
-                        alt=""
-                        aria-hidden="true"
-                      />
-                    </div>
-                  )}
-                  <div class="flex flex-col gap-3 p-5 flex-1">
-                    <p class="text-[12px] font-mono text-muted">
-                      {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-                    </p>
-                    <h3 class="text-[16px] font-semibold text-primary tracking-tight leading-snug group-hover:text-accent transition-colors duration-200">
-                      {post.data.title}
-                    </h3>
-                    {post.data.description && (
-                      <p class="text-[14px] text-secondary leading-relaxed line-clamp-2 flex-1">
-                        {post.data.description}
-                      </p>
-                    )}
-                    <div class="flex items-center gap-1 pt-2 text-[13px] font-mono text-accent">
-                      <span>Read more</span>
-                      <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" class="transition-transform duration-200 group-hover:translate-x-0.5">
-                        <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </div>
+                <div class="p-5 font-mono text-[14px] leading-[1.8] text-[#2F3437]">
+                  <div class="flex gap-2.5">
+                    <span class="text-primary font-semibold whitespace-nowrap">$</span>
+                    <span>superkilat agent deploy --name=support-bot</span>
                   </div>
-                </a>
-              </article>
-            ))}
+                  <div class="ml-[22px] text-muted">→ Loading skillset: customer-support, order-tracking, refund</div>
+                  <div class="ml-[22px] text-muted">→ Connecting to: vector-db, CRM, WhatsApp API</div>
+                  <div class="ml-[22px] text-muted">→ Agent loop: active</div>
+
+                  <div class="flex gap-2.5 mt-3">
+                    <span class="text-primary font-semibold whitespace-nowrap">$</span>
+                    <span>superkilat workflow run --daily-report</span>
+                  </div>
+                  <div class="ml-[22px] text-[#346538]">✓ Task completed in 1.2s</div>
+                  <div class="ml-[22px] text-muted">→ report sent to 14 stakeholders</div>
+
+                  <div class="flex gap-2.5 mt-3">
+                    <span class="text-primary font-semibold whitespace-nowrap">$</span>
+                    <span>superkilat mcp list</span>
+                  </div>
+                  <div class="ml-[22px] text-muted">hermes · openclaw · n8n · langgraph · claude-code</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── Tech Logos ─── -->
+      <section class="py-[56px] border-t border-divider" aria-label="Teknologi yang diakui">
+        <div class="mx-auto max-w-6xl px-4">
+          <p class="text-center text-muted text-[14px] mb-[26px]">Komersil dengan ekosistem yang sama yang digunakan tim AI engineering terkemuka</p>
+          <div class="flex flex-wrap justify-center gap-9 gap-y-5">
+            <span class="font-semibold text-[1rem] text-[#5f6368] flex items-center gap-2">
+              <span class="block w-[6px] h-[6px] rounded-full bg-primary" aria-hidden="true"></span>Hermes
+            </span>
+            <span class="font-semibold text-[1rem] text-[#5f6368] flex items-center gap-2">
+              <span class="block w-[6px] h-[6px] rounded-full bg-primary" aria-hidden="true"></span>OpenClaw
+            </span>
+            <span class="font-semibold text-[1rem] text-[#5f6368] flex items-center gap-2">
+              <span class="block w-[6px] h-[6px] rounded-full bg-primary" aria-hidden="true"></span>n8n
+            </span>
+            <span class="font-semibold text-[1rem] text-[#5f6368] flex items-center gap-2">
+              <span class="block w-[6px] h-[6px] rounded-full bg-primary" aria-hidden="true"></span>LangGraph
+            </span>
+            <span class="font-semibold text-[1rem] text-[#5f6368] flex items-center gap-2">
+              <span class="block w-[6px] h-[6px] rounded-full bg-primary" aria-hidden="true"></span>Claude Code
+            </span>
+            <span class="font-semibold text-[1rem] text-[#5f6368] flex items-center gap-2">
+              <span class="block w-[6px] h-[6px] rounded-full bg-primary" aria-hidden="true"></span>Vector DB
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── Services / Features ─── -->
+      <section id="layanan" class="py-[88px]">
+        <div class="mx-auto max-w-6xl px-4">
+          <div class="max-w-[720px] mx-auto mb-[52px] text-center">
+            <h2 class="font-serif tracking-[-0.03em] leading-[1.1] text-[clamp(1.7rem,3.2vw,2.35rem)] font-semibold mb-3 text-balance"
+                style="font-family: 'Newsreader', 'Instrument Serif', Georgia, serif; letter-spacing: -0.02em;">
+              Layanan Agentic AI
+            </h2>
+            <p class="text-[17px] text-muted">Kami merancang, membangun, dan men-deploy AI agents yang terintegrasi dengan sistem operasional bisnis Anda.</p>
           </div>
 
-          <div class="text-center mt-12">
-            <a
-              href="/blog"
-              class="inline-flex items-center gap-2 rounded-md border border-divider px-5 py-2.5 text-[14px] font-medium font-mono text-secondary hover:text-primary hover:border-accent transition-all duration-200"
-            >
-              View all articles
-              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
-        </section>
-      )}
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            <!-- Feature Card 1 -->
+            <article class="bg-surface border border-divider rounded-[12px] p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div class="w-[40px] h-[40px] rounded-[8px] flex items-center justify-center bg-surface-alt border border-divider mb-5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
+                </svg>
+              </div>
+              <h3 class="text-[18px] font-semibold text-primary mb-2 leading-snug">AI Agent Development</h3>
+              <p class="text-[14px] text-muted leading-relaxed">Agents dengan memory, tool calling, dan multi-step reasoning menggunakan Hermes, OpenClaw, dan LangGraph.</p>
+            </article>
 
+            <!-- Feature Card 2 -->
+            <article class="bg-surface border border-divider rounded-[12px] p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div class="w-[40px] h-[40px] rounded-[8px] flex items-center justify-center bg-surface-alt border border-divider mb-5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+                </svg>
+              </div>
+              <h3 class="text-[18px] font-semibold text-primary mb-2 leading-snug">Workflow Automation</h3>
+              <p class="text-[14px] text-muted leading-relaxed">Hubungkan CRM, database, WhatsApp, email, dan API pihak ketiga ke dalam pipeline otomasi yang andal.</p>
+            </article>
+
+            <!-- Feature Card 3 -->
+            <article class="bg-surface border border-divider rounded-[12px] p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div class="w-[40px] h-[40px] rounded-[8px] flex items-center justify-center bg-surface-alt border border-divider mb-5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                </svg>
+              </div>
+              <h3 class="text-[18px] font-semibold text-primary mb-2 leading-snug">RAG & Knowledge Base</h3>
+              <p class="text-[14px] text-muted leading-relaxed">Chatbot internal berbasis dokumen perusahaan dengan vector search, embedding, dan source citation.</p>
+            </article>
+
+            <!-- Feature Card 4 -->
+            <article class="bg-surface border border-divider rounded-[12px] p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div class="w-[40px] h-[40px] rounded-[8px] flex items-center justify-center bg-surface-alt border border-divider mb-5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                </svg>
+              </div>
+              <h3 class="text-[18px] font-semibold text-primary mb-2 leading-snug">Tool Calling & MCP</h3>
+              <p class="text-[14px] text-muted leading-relaxed">Agen bisa memanggil function, API, database, dan layanan eksternal secara aman dan terstruktur.</p>
+            </article>
+
+            <!-- Feature Card 5 -->
+            <article class="bg-surface border border-divider rounded-[12px] p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div class="w-[40px] h-[40px] rounded-[8px] flex items-center justify-center bg-surface-alt border border-divider mb-5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>
+                </svg>
+              </div>
+              <h3 class="text-[18px] font-semibold text-primary mb-2 leading-snug">AI Infrastructure</h3>
+              <p class="text-[14px] text-muted leading-relaxed">Deploy, monitoring, dan scaling LLM workloads di cloud: Cloudflare, Vercel, AWS, Docker, Kubernetes.</p>
+            </article>
+
+            <!-- Feature Card 6 -->
+            <article class="bg-surface border border-divider rounded-[12px] p-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div class="w-[40px] h-[40px] rounded-[8px] flex items-center justify-center bg-surface-alt border border-divider mb-5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+              </div>
+              <h3 class="text-[18px] font-semibold text-primary mb-2 leading-snug">AI Enablement</h3>
+              <p class="text-[14px] text-muted leading-relaxed">Pelatihan tim internal, prompt engineering, evaluasi model, dan best practice production-grade AI.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── Stack ─── -->
+      <section id="stack" class="py-[88px] bg-surface-alt">
+        <div class="mx-auto max-w-6xl px-4">
+          <div class="max-w-[720px] mx-auto mb-[52px] text-center">
+            <h2 class="font-serif tracking-[-0.03em] leading-[1.1] text-[clamp(1.7rem,3.2vw,2.35rem)] font-semibold mb-3 text-balance"
+                style="font-family: 'Newsreader', 'Instrument Serif', Georgia, serif; letter-spacing: -0.02em;">
+              Stack Teknologi
+            </h2>
+            <p class="text-[17px] text-muted">Kami memilih tools modern yang teruji untuk produksi, bukan hanya untuk demo.</p>
+          </div>
+
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <div class="bg-white border border-divider rounded-[10px] p-5.5 text-left hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-200">
+              <span class="font-semibold text-[1rem] text-primary">Hermes</span>
+              <span class="block text-[13px] text-muted mt-1.5 font-medium">AI Agent Runtime</span>
+              <span class="inline-block mt-2.5 px-2 py-0.5 rounded-[9999px] bg-surface-alt border border-divider text-[11px] text-muted font-mono tracking-wider">runtime</span>
+            </div>
+
+            <div class="bg-white border border-divider rounded-[10px] p-5.5 text-left hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-200">
+              <span class="font-semibold text-[1rem] text-primary">OpenClaw</span>
+              <span class="block text-[13px] text-muted mt-1.5 font-medium">Agent Orchestration</span>
+              <span class="inline-block mt-2.5 px-2 py-0.5 rounded-[9999px] bg-surface-alt border border-divider text-[11px] text-muted font-mono tracking-wider">orchestration</span>
+            </div>
+
+            <div class="bg-white border border-divider rounded-[10px] p-5.5 text-left hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-200">
+              <span class="font-semibold text-[1rem] text-primary">n8n</span>
+              <span class="block text-[13px] text-muted mt-1.5 font-medium">Workflow Automation</span>
+              <span class="inline-block mt-2.5 px-2 py-0.5 rounded-[9999px] bg-surface-alt border border-divider text-[11px] text-muted font-mono tracking-wider">workflow</span>
+            </div>
+
+            <div class="bg-white border border-divider rounded-[10px] p-5.5 text-left hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-200">
+              <span class="font-semibold text-[1rem] text-primary">LangGraph</span>
+              <span class="block text-[13px] text-muted mt-1.5 font-medium">Multi-Agent Graphs</span>
+              <span class="inline-block mt-2.5 px-2 py-0.5 rounded-[9999px] bg-surface-alt border border-divider text-[11px] text-muted font-mono tracking-wider">graphs</span>
+            </div>
+
+            <div class="bg-white border border-divider rounded-[10px] p-5.5 text-left hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-200">
+              <span class="font-semibold text-[1rem] text-primary">LangChain</span>
+              <span class="block text-[13px] text-muted mt-1.5 font-medium">LLM Application</span>
+              <span class="inline-block mt-2.5 px-2 py-0.5 rounded-[9999px] bg-surface-alt border border-divider text-[11px] text-muted font-mono tracking-wider">app</span>
+            </div>
+
+            <div class="bg-white border border-divider rounded-[10px] p-5.5 text-left hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-200">
+              <span class="font-semibold text-[1rem] text-primary">Claude Code</span>
+              <span class="block text-[13px] text-muted mt-1.5 font-medium">AI Coding</span>
+              <span class="inline-block mt-2.5 px-2 py-0.5 rounded-[9999px] bg-surface-alt border border-divider text-[11px] text-muted font-mono tracking-wider">coding</span>
+            </div>
+
+            <div class="bg-white border border-divider rounded-[10px] p-5.5 text-left hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-200">
+              <span class="font-semibold text-[1rem] text-primary">Vector DB</span>
+              <span class="block text-[13px] text-muted mt-1.5 font-medium">Embedding Search</span>
+              <span class="inline-block mt-2.5 px-2 py-0.5 rounded-[9999px] bg-surface-alt border border-divider text-[11px] text-muted font-mono tracking-wider">search</span>
+            </div>
+
+            <div class="bg-white border border-divider rounded-[10px] p-5.5 text-left hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-200">
+              <span class="font-semibold text-[1rem] text-primary">MCP</span>
+              <span class="block text-[13px] text-muted mt-1.5 font-medium">Model Context Protocol</span>
+              <span class="inline-block mt-2.5 px-2 py-0.5 rounded-[9999px] bg-surface-alt border border-divider text-[11px] text-muted font-mono tracking-wider">protocol</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── Why Super Kilat ─── -->
+      <section id="keunggulan" class="py-[88px]">
+        <div class="mx-auto max-w-6xl px-4">
+          <div class="max-w-[720px] mx-auto mb-[52px] text-center">
+            <h2 class="font-serif tracking-[-0.03em] leading-[1.1] text-[clamp(1.7rem,3.2vw,2.35rem)] font-semibold mb-3 text-balance"
+                style="font-family: 'Newsreader', 'Instrument Serif', Georgia, serif; letter-spacing: -0.02em;">
+              Mengapa Super Kilat?
+            </h2>
+            <p class="text-[17px] text-muted">Kami bukan sekadar menyediakan AI. Kami membangun sistem yang benar-benar berjalan di produksi.</p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-10 items-start">
+            <!-- Why List -->
+            <div>
+              <div class="flex gap-3.5 mb-4">
+                <div class="w-[26px] h-[26px] rounded-full flex items-center justify-center bg-surface-alt text-primary flex-none text-[13px] border border-divider font-semibold" aria-hidden="true">✓</div>
+                <div>
+                  <h4 class="font-semibold text-primary mb-1 text-[15px]" style="font-family: 'SF Pro Display', 'Helvetica Neue', 'Switzer', system-ui, sans-serif;">Production-Ready</h4>
+                  <p class="text-[14px] text-muted leading-relaxed m-0">Kode diuji, terdokumentasi, dan siap skala. Bukan proof-of-concept yang rusak di minggu kedua.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3.5 mb-4">
+                <div class="w-[26px] h-[26px] rounded-full flex items-center justify-center bg-surface-alt text-primary flex-none text-[13px] border border-divider font-semibold" aria-hidden="true">✓</div>
+                <div>
+                  <h4 class="font-semibold text-primary mb-1 text-[15px]" style="font-family: 'SF Pro Display', 'Helvetica Neue', 'Switzer', system-ui, sans-serif;">Integrasi Enterprise</h4>
+                  <p class="text-[14px] text-muted leading-relaxed m-0">Terhubung ke API, database, CRM, ERP, WhatsApp, email, dan platform internal Anda.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3.5 mb-4">
+                <div class="w-[26px] h-[26px] rounded-full flex items-center justify-center bg-surface-alt text-primary flex-none text-[13px] border border-divider font-semibold" aria-hidden="true">✓</div>
+                <div>
+                  <h4 class="font-semibold text-primary mb-1 text-[15px]" style="font-family: 'SF Pro Display', 'Helvetica Neue', 'Switzer', system-ui, sans-serif;">Security &amp; Governance</h4>
+                  <p class="text-[14px] text-muted leading-relaxed m-0">Rate limiting, access control, audit log, dan secret management menjadi standar setiap proyek.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3.5 mb-4">
+                <div class="w-[26px] h-[26px] rounded-full flex items-center justify-center bg-surface-alt text-primary flex-none text-[13px] border border-divider font-semibold" aria-hidden="true">✓</div>
+                <div>
+                  <h4 class="font-semibold text-primary mb-1 text-[15px]" style="font-family: 'SF Pro Display', 'Helvetica Neue', 'Switzer', system-ui, sans-serif;">Tim Ahli Lokal</h4>
+                  <p class="text-[14px] text-muted leading-relaxed m-0">Tim engineer Indonesia yang memahami kebutuhan bisnis dan regulasi lokal.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Metrics Visual -->
+            <div class="border border-divider rounded-[12px] p-6 bg-surface min-h-[340px] flex items-center" aria-label="Metrik operasional">
+              <div class="grid grid-cols-2 gap-3 w-full">
+                <div class="bg-white border border-divider rounded-[10px] p-4 text-center">
+                  <strong class="block text-[1.8rem] font-bold text-primary leading-none mb-1"
+                          style="font-family: 'Newsreader', Georgia, serif;">50+</strong>
+                  <span class="text-[13px] text-muted">AI Agents Deployed</span>
+                </div>
+                <div class="bg-white border border-divider rounded-[10px] p-4 text-center">
+                  <strong class="block text-[1.8rem] font-bold text-primary leading-none mb-1"
+                          style="font-family: 'Newsreader', Georgia, serif;">10x</strong>
+                  <span class="text-[13px] text-muted">Faster Workflows</span>
+                </div>
+                <div class="bg-white border border-divider rounded-[10px] p-4 text-center">
+                  <strong class="block text-[1.8rem] font-bold text-primary leading-none mb-1"
+                          style="font-family: 'Newsreader', Georgia, serif;">24/7</strong>
+                  <span class="text-[13px] text-muted">Autonomous Operations</span>
+                </div>
+                <div class="bg-white border border-divider rounded-[10px] p-4 text-center">
+                  <strong class="block text-[1.8rem] font-bold text-primary leading-none mb-1"
+                          style="font-family: 'Newsreader', Georgia, serif;">100%</strong>
+                  <span class="text-[13px] text-muted">Indonesia Team</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── CTA ─── -->
+      <section id="kontak" class="py-[88px]">
+        <div class="mx-auto max-w-6xl px-4">
+          <div class="border border-divider rounded-[14px] p-[56px] text-center bg-white max-w-[720px] mx-auto">
+            <h2 class="font-serif tracking-[-0.03em] leading-[1.1] text-[clamp(1.7rem,3.2vw,2.35rem)] font-semibold mb-4 text-balance"
+                style="font-family: 'Newsreader', 'Instrument Serif', Georgia, serif; letter-spacing: -0.02em;">
+              Siap Menerapkan Agentic AI?
+            </h2>
+            <p class="text-[17px] text-muted leading-relaxed max-w-[600px] mx-auto mb-[26px]">
+              Ceritakan kebutuhan bisnis Anda. Kami akan memetaskan use case, memilih stack yang tepat, dan membangun MVP dalam hitungan hari.
+            </p>
+
+            <form class="email-form flex justify-center gap-3 flex-wrap max-w-[520px] mx-auto"
+                  onsubmit="event.preventDefault(); window.location.href='mailto:hello@superkilat.ai?subject=Konsultasi+Agentic+AI';"
+                  aria-label="Form kontak">
+              <input type="email" placeholder="email@perusahaan.com" required
+                     aria-label="Email"
+                     class="flex-1 min-w-[220px] px-4 py-[14px] rounded-[6px] border border-divider bg-white text-primary text-[1rem] outline-none focus:shadow-[0_0_0_2px_rgba(17,17,17,0.08)] focus:border-[#c4c3bf]"
+                     style="font-family: 'SF Pro Display', 'Helvetica Neue', 'Switzer', system-ui, sans-serif;" />
+              <button type="submit"
+                      class="inline-flex items-center justify-center px-[26px] py-[14px] rounded-[6px] bg-primary text-white font-semibold text-[1rem] border border-primary active:scale-[0.98] transition-transform duration-150 hover:bg-[#333333] hover:border-[#333333]">
+                Hubungi Kami
+              </button>
+            </form>
+
+            <p class="text-[13px] text-muted mt-4">
+              Atau email langsung ke <a href="mailto:hello@superkilat.ai" class="underline underline-offset-[3px]">hello@superkilat.ai</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── FAQ ─── -->
+      <section id="faq" class="py-[88px] bg-surface-alt">
+        <div class="mx-auto max-w-6xl px-4">
+          <div class="max-w-[720px] mx-auto mb-[52px] text-center">
+            <h2 class="font-serif tracking-[-0.03em] leading-[1.1] text-[clamp(1.7rem,3.2vw,2.35rem)] font-semibold mb-3 text-balance"
+                style="font-family: 'Newsreader', 'Instrument Serif', Georgia, serif; letter-spacing: -0.02em;">
+              Pertanyaan Umum
+            </h2>
+            <p class="text-[17px] text-muted">Jawaban untuk pertanyaan yang sering diajukan sebelum memulai proyek Agentic AI.</p>
+          </div>
+
+          <div class="max-w-[800px] mx-auto grid gap-0">
+            <!-- FAQ Item 1 -->
+            <div class="faq-item border-b border-divider">
+              <button class="faq-question w-full flex justify-between items-center py-[18px] bg-none border-none text-primary text-[17px] font-semibold text-left cursor-pointer"
+                      aria-expanded="false" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'));">
+                <span>Apa itu Agentic AI?</span>
+                <svg class="faq-icon w-[14px] h-[14px] transition-transform duration-200 text-primary" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer pb-[18px] text-muted text-[15px] leading-[1.7]">
+                Agentic AI adalah sistem AI yang mampu merencanakan, membuat keputusan, dan mengeksekusi tugas secara otonom menggunakan tool calling, memory, dan multi-step reasoning — bukan sekadar chatbot yang menunggu instruksi.
+              </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div class="faq-item border-b border-divider">
+              <button class="faq-question w-full flex justify-between items-center py-[18px] bg-none border-none text-primary text-[17px] font-semibold text-left cursor-pointer"
+                      aria-expanded="false" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'));">
+                <span>Berapa lama proses implementasi?</span>
+                <svg class="faq-icon w-[14px] h-[14px] transition-transform duration-200 text-primary" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer pb-[18px] text-muted text-[15px] leading-[1.7]">
+                Bergantung pada kompleksitas proyek. MVP biasanya dapat dibangun dalam hitungan hari, sementara sistem enterprise membutuhkan beberapa minggu untuk perencanaan, pengembangan, dan deployment yang menyeluruh.
+              </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="faq-item border-b border-divider">
+              <button class="faq-question w-full flex justify-between items-center py-[18px] bg-none border-none text-primary text-[17px] font-semibold text-left cursor-pointer"
+                      aria-expanded="false" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'));">
+                <span>Tools apa saja yang digunakan?</span>
+                <svg class="faq-icon w-[14px] h-[14px] transition-transform duration-200 text-primary" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer pb-[18px] text-muted text-[15px] leading-[1.7]">
+                Kami menggunakan ekosistem Hermes, OpenClaw, n8n, LangGraph, dan Claude Code sebagai foundation utama, ditambah vector database, MCP protocol, dan LLM provider seperti Groq dan OpenAI.
+              </div>
+            </div>
+
+            <!-- FAQ Item 4 -->
+            <div class="faq-item border-b border-divider">
+              <button class="faq-question w-full flex justify-between items-center py-[18px] bg-none border-none text-primary text-[17px] font-semibold text-left cursor-pointer"
+                      aria-expanded="false" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'));">
+                <span>Apakah cocok untuk UMKM?</span>
+                <svg class="faq-icon w-[14px] h-[14px] transition-transform duration-200 text-primary" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer pb-[18px] text-muted text-[15px] leading-[1.7]">
+                Sangat cocok. Kami membangun solusi yang scalable — mulai dari chatbot WhatsApp sederhana untuk UMKM hingga sistem RAG enterprise dengan integrasi CRM dan ERP.
+              </div>
+            </div>
+
+            <!-- FAQ Item 5 -->
+            <div class="faq-item border-b border-divider">
+              <button class="faq-question w-full flex justify-between items-center py-[18px] bg-none border-none text-primary text-[17px] font-semibold text-left cursor-pointer"
+                      aria-expanded="false" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'));">
+                <span>Bagaimana proses kerjasamanya?</span>
+                <svg class="faq-icon w-[14px] h-[14px] transition-transform duration-200 text-primary" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer pb-[18px] text-muted text-[15px] leading-[1.7]">
+                Dimulai dari konsultasi gratis untuk memetaskan use case, dilanjutkan dengan proof-of-concept, lalu pengembangan penuh dengan testing dan deployment. Setiap proyek mengikuti standar keamanan dan dokumentasi yang ketat.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <Footer />
+
+    <script>
+      // FAQ accordion — progressive enhancement
+      document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.parentElement;
+          const isOpen = item.classList.contains('open');
+          // Close all
+          document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+          document.querySelectorAll('.faq-question').forEach(b => b.setAttribute('aria-expanded', 'false'));
+          // Toggle clicked
+          if (!isOpen) {
+            item.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    </script>
   </body>
 </html>
-
-<style>
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.7); }
-  }
-</style>
