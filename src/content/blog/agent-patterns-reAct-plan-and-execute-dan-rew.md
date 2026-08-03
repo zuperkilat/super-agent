@@ -1,0 +1,64 @@
+---
+title: 'Agent Patterns: ReAct, Plan-and-Execute, dan ReWOO'
+description: 'Perbandingan pola arsitektur AI agent ReAct, Plan-and-Execute, dan ReWOO untuk merancang sistem agentic yang handal dan sesuai kasus penggunaan.'
+pubDate: '2026-08-03'
+heroImage: '../../assets/blog-placeholder-60.jpg'
+---
+ReAct, Plan-and-Execute, dan ReWOO adalah tiga pola arsitektur AI agent yang mendefinisikan cara agen memproses informasi, memilih tindakan, dan menyelesaikan tugas kompleks. ReAct menggabungkan reasoning dan acting secara bergantian, sehingga agen dapat mengevaluasi kemajuan sebelum mengambil langkah berikutnya. Plan-and-Execute memisahkan fase perencanaan dan eksekusi, memberikan agen kesempatan untuk menyusun strategi sebelum bertindak. ReWOO menyederhanakan pendekatan ini dengan memisahkan reasoning sepenuhnya dari acting, sehingga model hanya mengeksekusi rencana yang sudah dibentuk. Memahami perbedaan pola ini penting untuk merancang sistem agentic yang sesuai dengan kompleksitas tugas dan anggaran komputasi.
+
+Pola-pola ini dibutuhkan karena AI agent tidak dapat menyelesaikan tugas kompleks hanya dengan satu panggilan LLM; mereka memerlukan manajemen konteks, tool use, dan error recovery yang konsisten. ReAct cocok untuk tugas yang memerlukan observasi dunia nyata secara berulang seperti navigasi atau debugging. Plan-and-Execute cocok untuk proyek jangka panjang di mana perubahan rencana jarang terjadi, seperti analisis data terstruktur atau penulisan laporan. ReWOO menawarkan efisiensi token dan waktu karena reasoning dilakukan sekali di awal, cocok untuk tugas dengan variabel yang dapat diprediksi. Pola ini sejalan dengan [langgraph-agent-patterns](langgraph-agent-patterns) yang menekankan pentingnya memisahkan kontrol alur untuk meningkatkan keterbacaan dan kemudahan debugging.
+
+ReAct menyelesaikan masalah agen yang terjebak dalam loop atau mengambil tindakan tanpa memverifikasi hasil sebelumnya. Dengan menggabungkan reasoning dan acting, agen dapat mengevaluasi apakah langkah sebelumnya berhasil sebelum melanjutkan. Plan-and-Execute menyelesaikan masalah agen yang sering mengubah rencana karena bias konteks jangka pendek; dengan fase perencanaan terpisah, agen dapat mempertahankan strategi global. ReWOO menyelesaikan masalah biaya token tinggi pada reasoning panjang yang diulang-ulang selama eksekusi; reasoning dilakukan sekali, lalu agen hanya menjalankan rencana. Bergantung pada kasus, developer dapat memilih pola yang meminimalkan error atau memaksimalkan efisiensi.
+
+Cara kerja ReAct melibatkan siklus Thought → Action → Observation yang diulang hingga tugas selesai. Agen memikirkan langkah berikutnya, memilih tool atau respons, mengamati hasil, lalu memutuskan apakah perlu melanjutkan. Cara kerja Plan-and-Execute melibatkan fase pertama di mana agen menyusun daftar langkah terperinci, kemudian fase kedua di mana agen menjalankan setiap langkah dan menyesuaikan rencana hanya jika terjadi error besar. Cara kerja ReWOO melibatkan fase reasoning tunggal di mana agen menyusun rencana lengkap, kemudian fase acting di mana agen menjalankan langkah-langkah tanpa mengembalikan ke reasoning kecuali diperlukan. Ketiga pola ini dapat diimplementasikan menggunakan framework seperti LangGraph atau AutoGen, tetapi ReWOO paling sering diimplementasikan manual karena strukturnya sederhana.
+
+Arsitektur ReAct berbasis percakapan iterative yang menghubungkan LLM dengan tool secara berulang. Arsitektur Plan-and-Execute berbasis dua komponen utama: planner yang menyusun strategi, dan executor yang menjalankan langkah. Arsitektur ReWOO berbasis tiga komponen: reasoner yang menyusun rencana, executor yang menjalankan rencana, dan optional monitor yang memeriksa hasil akhir. ReAct cocok untuk lingkungan dinamis di mana observasi mempengaruhi langkah berikutnya, sedangkan Plan-and-Execute dan ReWOO lebih cocok untuk lingkungan yang lebih terprediksi. ReWOO biasanya menghasilkan latency terendah karena reasoning hanya dilakukan sekali, tetapi kurang fleksibel jika dunia berubah cepat.
+
+Komponen utama ReAct meliputi prompt template yang memaksa siklus Thought → Action → Observation, tool registry yang disediakan kepada LLM, serta memory yang menyimpan observasi sebelumnya. Komponen utama Plan-and-Execute meliputi planner prompt yang meminta LLM membuat rencana terperinci, executor yang menjalankan setiap langkah, dan reviser yang menyesuaikan rencana jika terjadi error. Komponen utama ReWOO meliputi reasoner yang membuat rencana lengkap di awal, executor yang menjalankan rencana tanpa reasoning tambahan, serta optional verifier yang mengevaluasi hasil akhir. Semua pola ini memerlukan guardrail untuk memastikan agen tidak keluar dari scope yang ditetapkan.
+
+Contoh nyata ReAct meliputi agent web browsing yang mencari informasi, membaca hasil, dan memutuskan apakah harus klik link lain atau menjawab pertanyaan. Sistem debugging menggunakan ReAct dapat membaca log, memformulasikan hipotesis, menjalankan perintah, dan memeriksa output secara berulang. Plan-and-Execute digunakan untuk analisis data yang melibatkan pengambilan data dari database, pembersihan, visualisasi, dan penyusunan laporan yang harus dijalankan berurutan. ReWOO digunakan untuk tugas rutin seperti pengecekan stok gudang, pengiriman email notifikasi, atau pembuatan invoice yang memiliki variabel yang dapat diprediksi sebelumnya. Beberapa tim menggabungkan pola: menggunakan ReAct untuk fase riset awal, kemudian Plan-and-Execute untuk eksekusi yang lebih terstruktur.
+
+ReAct digunakan ketika tugas memerlukan observasi dunia nyata secara berulang, seperti browsing, navigasi, atau debugging. Penerapan optimal terjadi jika lingkungan dinamis dan hasil setiap langkah mempengaruhi langkah berikutnya. Plan-and-Execute digunakan ketika tugas memiliki struktur yang jelas dan jarang berubah di tengah jalan, seperti analisis data atau penulisan dokumen. Penerapan optimal terjadi jika perencanaan awal dapat dilakukan dengan akurat dan eksekusi jarang memerlukan revisi. ReWOO digunakan ketika biaya token menjadi concern utama atau variabel tugas dapat diprediksi sejak awal. Penerapan optimal terjadi jika rencana awal andal dan environment terprediksi. Memilih pola yang tepat dapat mengurangi biaya komputasi hingga 50 persen pada banyak kasus.
+
+ReAct tidak cocok jika tugas memerlukan perencanaan jangka panjang yang tidak boleh diubah oleh observasi singkat, karena agen dapat teralihkan oleh hasil sementara. Plan-and-Execute tidak cocok jika lingkungan sangat dinamis di mana rencana awal hampir pasti akan berubah, karena biaya revisi menjadi tinggi. ReWOO tidak cocok jika variabel tugas tidak dapat diprediksi sejak awal atau jika error selama eksekusi sering memerlukan reasoning ulang. Semua pola ini tidak cocok jika tugas hanya memerlukan respons statis tanpa tool use atau perencanaan. Organisasi tanpa standar observability akan kesulitan memantau pola mana yang paling efektif untuk use case tertentu.
+
+Alternatif meliputi pola Reflexion yang menambahkan evaluasi mandiri setelah eksekusi, pola Chain-of-Thought yang fokus pada reasoning berantai tanpa acting, serta pola Reflection yang memungkinkan agen memperbaiki output berdasarkan feedback. [reflexion-dan-babyagi-agent-loop-terbaru](reflexion-dan-babyagi-agent-loop-terbaru) membahas pola loop mandiri yang dapat menambahkan pembelajaran setelah eksekusi. ReAct juga dapat dianggap sebagai gabungan Chain-of-Thought dengan tool use. Untuk use case yang sangat sederhana, single-agent dengan function calling mungkin sudah cukup tanpa pola yang rumit. Framework seperti CrewAI dan LangGraph menyediakan implementasi bawaan dari pola-pola ini, sehingga developer tidak perlu menulis dari nol.
+
+Kelebihan ReAct meliputi fleksibilitas tinggi, kemudahan debugging karena setiap langkah tercatat, dan kesesuaian dengan lingkungan dinamis. Kelebihan Plan-and-Execute meliputi strategi yang konsisten, kemudahan audit rencana, dan stabilitas eksekusi jika perencanaan awal akurat. Kelebihan ReWOO meliputi efisiensi token, latency rendah, dan kesederhanaan implementasi untuk tugas yang terprediksi. Semua pola ini memudahkan developer memisahkan concern antara reasoning, acting, dan planning, sehingga kode menjadi lebih terstruktur dan mudah dirawat. Dokumentasi yang jelas tentang pola ini membantu tim memilih pendekatan yang tepat tanpa harus bereksperimen secara berlebihan.
+
+Kekurangan ReAct meliputi biaya token yang tinggi karena reasoning diulang setiap langkah, serta risiko agen terjebak dalam loop observasi yang tidak produktif. Kekurangan Plan-and-Execute meliputi biaya revisi yang tinggi jika rencana awal salah atau environment berubah, serta kurangnya fleksibilitas untuk menangani kejutan. Kekurangan ReWOO meliputi kurangnya fleksibilitas jika variabel tidak terprediksi, serta risiko rencana awal menjadi tidak relevan jika dunia berubah sebelum eksekusi. Semua pola ini juga bergantung pada kualitas prompt dan model LLM, sehingga performa dapat menurun jika model tidak cukup kuat. Tanpa batas iterasi, agen dapat menghabiskan sumber daya tanpa menghasilkan nilai.
+
+Best practice meliputi memulai dengan ReAct untuk eksplorasi, kemudian memindahkan ke Plan-and-Execute atau ReWOO ketika pola yang tepat teridentifikasi; menetapkan batas iterasi untuk setiap pola; serta mencatat setiap langkah untuk observability. Tim harus memilih pola berdasarkan stabilitas environment, bukan hanya preferensi. Guardrail harus didefinisikan untuk membatasi tool yang dapat diakses agen sesuai perannya. Prompt yang mendefinisikan pola harus jelas dan teruji pada beragam input sebelum produksi. Jika memerlukan konsultasi arsitektur, SuperKilat dapat membantu merancang sistem agentic dengan pola yang sesuai dengan kebutuhan bisnis.
+
+Kesalahan umum meliputi menggunakan ReAct untuk tugas yang memerlukan perencanaan ketat, menggunakan Plan-and-Execute untuk environment yang sangat dinamis, serta menggunakan ReWOO tanpa memvalidasi prediksi variabel sejak awal. Banyak tim salah menganggap bahwa salah satu pola lebih baik secara universal, padahal setiap pola memiliki trade-off yang jelas. Kesalahan lain adalah tidak menambahkan fallback jika agen tidak dapat menyelesaikan tugas dengan pola yang dipilih, sehingga pengguna mendapatkan error yang tidak informatif. Developer sering juga mengabaikan observability, sehingga sulit menentukan mana pola yang paling cocok untuk use case tertentu tanpa data eksperimen.
+
+Referensi resmi termasuk dokumentasi LangChain tentang pola agentic, paper asli ReAct, paper Plan-and-Solve, serta materi dari [agent-testing-evaluation](agent-testing-evaluation) yang membahas cara mengevaluasi pola agentic secara sistematis. Bagi developer yang ingin mengeksplorasi implementasi praktis, repositori LangGraph dan AutoGen menyediakan contoh yang dapat dimodifikasi. Semua referensi ini menekankan bahwa tidak ada pola agentic yang sempurna untuk segala kasus; pemilihan harus didasarkan pada karakteristik tugas, lingkungan, dan anggaran.
+
+## FAQ
+
+**Kapan sebaiknya menggunakan ReAct?**
+Gunakan ReAct ketika tugas memerlukan observasi dunia nyata secara berulang dan environment dinamis, seperti browsing web atau debugging.
+
+**Bagaimana cara beralih dari ReAct ke Plan-and-Execute?**
+Identifikasi bagian reasoning yang berulang, pindahkan ke fase perencanaan awal, dan uji ulang untuk memastikan rencana tetap berlaku saat eksekusi.
+
+**Apakah ReWOO lebih cepat daripada ReAct?**
+Ya, karena reasoning hanya dilakukan sekali di awal, tetapi kecepatan ini hanya relevan jika rencana awal tetap berlaku selama eksekusi.
+
+**Bagaimana cara menangani error pada Plan-and-Execute?**
+Tambahkan komponen reviser yang mengevaluasi error dan menyesuaikan rencana, atau fallback ke ReAct jika error memerlukan observasi lebih lanjut.
+
+**Apakah saya harus membuat pola agentic sendiri?**
+Tidak selalu. Framework seperti LangGraph, AutoGen, dan CrewAI menyediakan implementasi bawaan dari pola ini yang sudah diuji.
+
+## Artikel Terkait di Blog Ini
+
+Untuk memahami konsep dasar yang digunakan dalam artikel ini, Anda dapat merujuk ke [glossary](/glossary/) kami. Jika Anda ingin memperdalam pengetahuan tentang topik terkait, lihat juga artikel-artikel berikut yang telah dibahas lebih detail: [langgraph-agent-patterns](./langgraph-agent-patterns), [rag-vs-agents](./rag-vs-agents), [tool-design-patterns](./tool-design-patterns). Bagi yang membutuhkan panduan implementasi, [glossary](/glossary/) menyediakan definisi teknis yang relevan, dan Anda juga bisa mengeksplorasi [glossary](/glossary/) untuk istilah-istilah lain yang muncul di sepanjang tulisan ini.
+
+## Referensi
+
+- https://github.com/microsoft/semantic-kernel
+- https://github.com/cypress-io/cypress
+- https://github.com/facebook/react
+- https://github.com/facebook/react-native
+- https://superkilat.com/layanan/optimasi-kecepatan
