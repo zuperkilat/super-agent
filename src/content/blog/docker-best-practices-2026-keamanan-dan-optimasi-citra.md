@@ -67,7 +67,7 @@ EXPOSE 3000
 CMD ["node", "dist/main.js"]
 ```
 
-**Manfaat**: citra akhir hanya berisi artifact yang dibutuhkan untuk running — build tools, dev dependencies, dan source code tidak termasuk.
+Manfaat utama: citra akhir hanya berisi artifact yang dibutuhkan untuk running — build tools, dev dependencies, dan source code tidak termasuk [glossary: docker-container].
 
 ### Layer Caching dan Layer Ordering
 
