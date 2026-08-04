@@ -8,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://superkilat.ai',
+  site: 'https://superkilat-agent.vercel.app',
   integrations: [mdx(), sitemap()],
 
   vite: {
