@@ -4,6 +4,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import HeroFallback from '../components/HeroFallback.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -48,17 +49,19 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
           <div class="h-px mb-10 bg-divider"></div>
         </div>
 
-        <!-- Hero image -->
-        {heroImage && (
-          <div class="mt-2 mb-12">
+        <!-- Hero image (fallback ke SVG hitam+kuning bila gambar tidak ada) -->
+        <div class="mt-2 mb-12">
+          {heroImage ? (
             <img
               class="w-full rounded-[10px]"
               style="border: 1px solid var(--color-divider);"
-              src={heroImage}
+              src={typeof heroImage === 'string' ? heroImage : heroImage.src}
               alt={title}
             />
-          </div>
-        )}
+          ) : (
+            <HeroFallback title={title} />
+          )}
+        </div>
 
         <!-- Content -->
         <div class="prose prose-lg mx-auto max-w-3xl">
