@@ -2,9 +2,10 @@
 interface Props {
 	title: string;
 	subtitle?: string;
+	bare?: boolean; // true: tanpa rounded & border (untuk dipakai di dalam card)
 }
 
-const { title, subtitle = 'superkilat.com' } = Astro.props;
+const { title, subtitle = 'superkilat.com', bare = false } = Astro.props;
 
 // Wrap title into lines (max ~26 chars per line, max 4 lines)
 const words = title.split(' ');
@@ -34,8 +35,9 @@ const startY = 315 - textBlockHeight / 2 + fontSize * 0.8;
 ---
 
 <svg
-	class="w-full rounded-[10px]"
-	style="border: 1px solid var(--color-divider);"
+	class:list={["w-full h-full", { "rounded-[10px]": !bare }]}
+	style={bare ? undefined : "border: 1px solid var(--color-divider);"}
+	preserveAspectRatio="xMidYMid slice"
 	viewBox="0 0 1200 630"
 	xmlns="http://www.w3.org/2000/svg"
 	role="img"
